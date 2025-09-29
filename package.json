@@ -1,0 +1,20 @@
+{
+  "name": "moredcm",
+  "private": true,
+  "version": "1.0-alpha.0",
+  "description": "dcinside mobile web enhancer",
+  "author": "Bluehill",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3",
+    "vite-plugin-monkey": "^7.1.1"
+  }
+}
