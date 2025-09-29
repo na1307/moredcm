@@ -1,9 +1,11 @@
 # MoreDCM
 디시인사이드 모바일 웹을 향상시켜주는 유저스크립트입니다.
 
-<img src="./images/Screenshot_20250929_185155_Edge.png" alt="메인 화면" width="25%" />
-<img src="./images/Screenshot_20250929_185202_Edge.png" alt="어사이드 메뉴" width="25%" />
-<img src="./images/Screenshot_20250929_185204_Edge.png" alt="설정 화면" width="25%" />
+<p>
+  <img src="./images/Screenshot_20250929_185155_Edge.png" alt="메인 화면" width="25%" />
+  <img src="./images/Screenshot_20250929_185202_Edge.png" alt="어사이드 메뉴" width="25%" />
+  <img src="./images/Screenshot_20250929_185204_Edge.png" alt="설정 화면" width="25%" />
+</p>
 
 ## 기능
 * 브라우저의 다크 모드가 활성화되어 있으면 자동으로 야간 모드 활성화
