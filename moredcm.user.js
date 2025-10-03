@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MoreDCM
 // @namespace    npm/vite-plugin-monkey
-// @version      1.0-alpha.1
+// @version      1.0-alpha.2
 // @author       Bluehill
 // @description  dcinside mobile web enhancer
 // @license      MIT
@@ -36,7 +36,15 @@
         hideNews: new Setting("hideNews", "뉴스 숨기기"),
         hideMedia: new Setting("hideMedia", "미디어 숨기기")
       },
-      showAuthorId: new Setting("showAuthorId", "작성자 식별 코드 보이기")
+      postList: {
+        showPostListAuthorId: new Setting("showPostListAuthorId", "게시글 작성자 식별 코드 보이기")
+      },
+      post: {
+        showPostAuthorId: new Setting("showPostAuthorId", "게시글 작성자 식별 코드 보이기"),
+        showCommentAuthorId: new Setting("showCommentAuthorId", "댓글 작성자 식별 코드 보이기"),
+        hideBottomContents: new Setting("hideBottomContents", "하단 콘텐츠(실베, 뉴스 등) 숨기기")
+      },
+      hideDaum: new Setting("hideDaum", "게시글/검색 화면에서 다음 검색 숨기기")
     };
     id;
     title;
@@ -269,11 +277,31 @@
     mainpageSetting.textContent = "메인 화면 설정";
     a2.appendChild(mainpageSetting);
     li2.appendChild(a2);
+    const li3 = document.createElement("li");
+    const a3 = document.createElement("a");
+    a3.className = "noticeset-lnk";
+    const postListSetting = document.createElement("span");
+    postListSetting.className = "ntc";
+    postListSetting.textContent = "게시글 목록 설정";
+    a3.appendChild(postListSetting);
+    li3.appendChild(a3);
+    const li4 = document.createElement("li");
+    const a4 = document.createElement("a");
+    a4.className = "noticeset-lnk";
+    const postSetting = document.createElement("span");
+    postSetting.className = "ntc";
+    postSetting.textContent = "게시글 목록 설정";
+    a4.appendChild(postSetting);
+    li4.appendChild(a4);
     mdcmsetLst.appendChild(li1);
     Object.values(Setting.settings.topMenu).forEach((ts) => mdcmsetLst.appendChild(createSettingEntry(ts, true)));
     mdcmsetLst.appendChild(li2);
     Object.values(Setting.settings.mainPage).forEach((ts) => mdcmsetLst.appendChild(createSettingEntry(ts, true)));
-    mdcmsetLst.appendChild(createSettingEntry(Setting.settings.showAuthorId, false));
+    mdcmsetLst.appendChild(li3);
+    Object.values(Setting.settings.postList).forEach((ts) => mdcmsetLst.appendChild(createSettingEntry(ts, true)));
+    mdcmsetLst.appendChild(li4);
+    Object.values(Setting.settings.post).forEach((ts) => mdcmsetLst.appendChild(createSettingEntry(ts, true)));
+    mdcmsetLst.appendChild(createSettingEntry(Setting.settings.hideDaum, false));
     return mdcmsetLst;
   }
   function createSettingEntry(ts, depth) {
@@ -342,7 +370,9 @@
   function saveMdcmSetting() {
     Object.values(Setting.settings.topMenu).forEach((s) => s.save());
     Object.values(Setting.settings.mainPage).forEach((s) => s.save());
-    Setting.settings.showAuthorId.save();
+    Object.values(Setting.settings.postList).forEach((s) => s.save());
+    Object.values(Setting.settings.post).forEach((s) => s.save());
+    Setting.settings.hideDaum.save();
     hideMdcmSettingWindow();
   }
   function resetSetting() {
@@ -350,7 +380,9 @@
       Setting.settings.isDarkSet.reset();
       Object.values(Setting.settings.mainPage).forEach((s) => s.reset());
       Object.values(Setting.settings.topMenu).forEach((s) => s.reset());
-      Setting.settings.showAuthorId.reset();
+      Object.values(Setting.settings.postList).forEach((s) => s.reset());
+      Object.values(Setting.settings.post).forEach((s) => s.reset());
+      Setting.settings.hideDaum.reset();
       location.reload();
     }
   }
@@ -20460,7 +20492,7 @@ getMobilePostContent: post2.getMobilePostContent,
     }
   }
   function getPostAuthorId$1() {
-    if (!Setting.settings.showAuthorId.value) {
+    if (!Setting.settings.postList.showPostListAuthorId.value) {
       return;
     }
     Array.from(document.getElementsByClassName("gall-detail-lst")).forEach(async (lst) => {
@@ -20482,7 +20514,8 @@ getMobilePostContent: post2.getMobilePostContent,
       }).filter((e) => e);
       const pis = await distExports.getPostList({
         page: currentPage,
-        galleryId: location.pathname.split("/")[2]
+        galleryId: location.pathname.split("/")[2],
+        boardType: location.href.includes("recommend=1") ? "recommend" : "all"
       });
       pis.forEach((pi) => {
         const id = pi.id;
@@ -20511,10 +20544,11 @@ getMobilePostContent: post2.getMobilePostContent,
     if (location.pathname.split("/").length === 4) {
       getPostAuthorId();
       getCommentsAuthorId();
+      hideUnwantedItems();
     }
   }
   function getPostAuthorId() {
-    if (!Setting.settings.showAuthorId.value) {
+    if (!Setting.settings.post.showPostAuthorId.value) {
       return;
     }
     const ginfo2 = document.getElementsByClassName("ginfo2").item(0);
@@ -20539,6 +20573,9 @@ getMobilePostContent: post2.getMobilePostContent,
     a.appendChild(span);
   }
   function getCommentsAuthorId() {
+    if (!Setting.settings.post.showCommentAuthorId.value) {
+      return;
+    }
     const nicks = Array.from(document.getElementsByClassName("nick"));
     nicks.forEach((nick) => {
       const a = nick;
@@ -20552,11 +20589,38 @@ getMobilePostContent: post2.getMobilePostContent,
       a.appendChild(span);
     });
   }
+  function hideUnwantedItems() {
+    if (Setting.settings.post.hideBottomContents.value) {
+      const btmcon = document.getElementsByClassName("view-btm-con").item(0);
+      if (!btmcon) {
+        throw Error("하단 콘텐츠를 찾을 수 없습니다.");
+      }
+      const container = btmcon.parentElement;
+      if (!container) {
+        throw Error("btmcon parent");
+      }
+      container.remove();
+    }
+  }
+  function hideDaum() {
+    if (Setting.settings.hideDaum.value) {
+      const daumTit = Array.from(document.getElementsByClassName("md-tit")).find((e) => e.textContent === "다음 검색");
+      if (!daumTit) {
+        return;
+      }
+      const container = daumTit.parentElement?.parentElement;
+      if (!container) {
+        throw Error("daum parent");
+      }
+      container.remove();
+    }
+  }
   setDarkModeDefault();
   hideUnwantedMenuItems();
   hideUnwantedContents();
   addMoreDCMSetting();
   getPostAuthorIdOrIp();
   getPostAuthorIdOrIpInPost();
+  hideDaum();
 
 })();
