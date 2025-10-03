@@ -11,6 +11,7 @@
 * 브라우저의 다크 모드가 활성화되어 있으면 자동으로 야간 모드 활성화
 * 불필요한 상단 메뉴 항목 숨기기(트렌드, 이벤트 등...)
 * 불필요한 메인 화면 항목 숨기기(실베 등...)
+* 게시글/댓글/게시글 목록에 (반)고정닉 식별 코드 보이기
 * 향후에 더 많은 기능을 추가할 예정입니다.
 
 ## 설치 방법
@@ -20,14 +21,14 @@
 ## 개발 방법
 1. [Node.js](https://nodejs.org/) 24를 설치하세요. [fnm](https://github.com/Schniz/fnm)을 이용하여 설치하는 것을 권장합니다.
 2. [Corepack](https://github.com/nodejs/corepack)을 활성화하세요.
-  ```bash
-  corepack enable
-  ```
+    ```bash
+    corepack enable
+    ```
 3. 다음 명령을 입력해서 빌드하세요.
-  ```bash
-  pnpm install
-  pnpm build
-  ```
+    ```bash
+    pnpm install
+    pnpm build
+    ```
 
 ## LICENSE
 MIT
