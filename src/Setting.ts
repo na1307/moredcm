@@ -16,7 +16,8 @@ export class Setting {
             hideSilbe: new Setting('hideSilbe', '실베 숨기기'),
             hideNews: new Setting('hideNews', '뉴스 숨기기'),
             hideMedia: new Setting('hideMedia', '미디어 숨기기')
-        }
+        },
+        showAuthorId: new Setting('showAuthorId', '작성자 식별 코드 보이기')
     }
 
     readonly id: string

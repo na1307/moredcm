@@ -157,23 +157,27 @@ function createMdcmsetLst(): HTMLUListElement {
     li2.appendChild(a2)
 
     mdcmsetLst.appendChild(li1)
-    Object.values(Setting.settings.topMenu).forEach(ts => mdcmsetLst.appendChild(createSettingEntryDepth(ts.id, ts.title, () => ts.value, v => ts.value = v)))
+    Object.values(Setting.settings.topMenu).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
     mdcmsetLst.appendChild(li2)
-    Object.values(Setting.settings.mainPage).forEach(ts => mdcmsetLst.appendChild(createSettingEntryDepth(ts.id, ts.title, () => ts.value, v => ts.value = v)))
+    Object.values(Setting.settings.mainPage).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
+    mdcmsetLst.appendChild(createSettingEntry(Setting.settings.showAuthorId, false))
 
     return mdcmsetLst
 }
 
-function createSettingEntryDepth(id: string, title: string, get: () => boolean, set: (value: boolean) => void): HTMLLIElement {
+function createSettingEntry(ts: Setting, depth: boolean): HTMLLIElement {
     const entry = document.createElement('li')
-    entry.className = 'depth'
+
+    if (depth) {
+        entry.className = 'depth'
+    }
 
     const a = document.createElement('a')
     a.className = 'noticeset-lnk'
 
     const ntc = document.createElement('span')
     ntc.className = 'ntc'
-    ntc.textContent = title
+    ntc.textContent = ts.title
 
     a.appendChild(ntc)
 
@@ -184,14 +188,14 @@ function createSettingEntryDepth(id: string, title: string, get: () => boolean, 
     bgm.className = 'bgm'
 
     const label = document.createElement('label')
-    label.id = 'mdcm-' + id.toLowerCase()
+    label.id = 'mdcm-' + ts.id.toLowerCase()
     label.classList.add('bgm-control')
 
-    if (get()) {
+    if (ts.value) {
         label.classList.add('on')
     }
 
-    label.addEventListener('click', () => updateToggle(label, get, set))
+    label.addEventListener('click', () => updateToggle(label, ts))
 
     const ball = document.createElement('span')
     ball.className = 'ball'
@@ -208,10 +212,10 @@ function createSettingEntryDepth(id: string, title: string, get: () => boolean, 
     return entry
 }
 
-function updateToggle(label: HTMLLabelElement, get: () => boolean, set: (value: boolean) => void): void {
-    const value = !get()
+function updateToggle(label: HTMLLabelElement, ts: Setting): void {
+    const value = !ts.value
 
-    set(value)
+    ts.value = value
 
     if (value) {
         label.classList.add('on')
@@ -253,6 +257,7 @@ function hideMdcmSettingWindow(): void {
 function saveMdcmSetting(): void {
     Object.values(Setting.settings.topMenu).forEach(s => s.save())
     Object.values(Setting.settings.mainPage).forEach(s => s.save())
+    Setting.settings.showAuthorId.save()
     hideMdcmSettingWindow()
 }
 
@@ -261,6 +266,7 @@ function resetSetting(): void {
         Setting.settings.isDarkSet.reset()
         Object.values(Setting.settings.mainPage).forEach(s => s.reset())
         Object.values(Setting.settings.topMenu).forEach(s => s.reset())
+        Setting.settings.showAuthorId.reset()
         location.reload()
     }
 }
