@@ -17,7 +17,15 @@ export class Setting {
             hideNews: new Setting('hideNews', '뉴스 숨기기'),
             hideMedia: new Setting('hideMedia', '미디어 숨기기')
         },
-        showAuthorId: new Setting('showAuthorId', '작성자 식별 코드 보이기')
+        postList: {
+            showPostListAuthorId: new Setting('showPostListAuthorId', '게시글 작성자 식별 코드 보이기')
+        },
+        post: {
+            showPostAuthorId: new Setting('showPostAuthorId', '게시글 작성자 식별 코드 보이기'),
+            showCommentAuthorId: new Setting('showCommentAuthorId', '댓글 작성자 식별 코드 보이기'),
+            hideBottomContents: new Setting('hideBottomContents', '하단 콘텐츠(실베, 뉴스 등) 숨기기')
+        },
+        hideDaum: new Setting('hideDaum', '게시글/검색 화면에서 다음 검색 숨기기')
     }
 
     readonly id: string

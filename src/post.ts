@@ -5,11 +5,12 @@ export function getPostAuthorIdOrIpInPost(): void {
     if (location.pathname.split('/').length === 4) {
         getPostAuthorId()
         getCommentsAuthorId()
+        hideUnwantedItems()
     }
 }
 
 function getPostAuthorId(): void {
-    if (!Setting.settings.showAuthorId.value) {
+    if (!Setting.settings.post.showPostAuthorId.value) {
         return
     }
 
@@ -46,6 +47,10 @@ function getPostAuthorId(): void {
 }
 
 function getCommentsAuthorId(): void {
+    if (!Setting.settings.post.showCommentAuthorId.value) {
+        return
+    }
+
     const nicks = Array.from(document.getElementsByClassName('nick'))
 
     nicks.forEach(nick => {
@@ -63,4 +68,22 @@ function getCommentsAuthorId(): void {
 
         a.appendChild(span)
     })
+}
+
+function hideUnwantedItems(): void {
+    if (Setting.settings.post.hideBottomContents.value) {
+        const btmcon = document.getElementsByClassName('view-btm-con').item(0)
+
+        if (!btmcon) {
+            throw Error('하단 콘텐츠를 찾을 수 없습니다.')
+        }
+
+        const container = btmcon.parentElement
+
+        if (!container) {
+            throw Error('btmcon parent')
+        }
+
+        container.remove()
+    }
 }

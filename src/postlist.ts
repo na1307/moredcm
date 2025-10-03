@@ -31,7 +31,7 @@ export function getPostAuthorIdOrIp(): void {
 }
 
 function getPostAuthorId(): void {
-    if (!Setting.settings.showAuthorId.value) {
+    if (!Setting.settings.postList.showPostListAuthorId.value) {
         return
     }
 
@@ -64,7 +64,8 @@ function getPostAuthorId(): void {
 
         const pis = await getPostList({
             page: currentPage,
-            galleryId: location.pathname.split('/')[2]
+            galleryId: location.pathname.split('/')[2],
+            boardType: location.href.includes('recommend=1') ? 'recommend' : 'all'
         })
 
         pis.forEach(pi => {

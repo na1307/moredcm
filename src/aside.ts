@@ -156,11 +156,41 @@ function createMdcmsetLst(): HTMLUListElement {
 
     li2.appendChild(a2)
 
+    const li3 = document.createElement('li')
+
+    const a3 = document.createElement('a')
+    a3.className = 'noticeset-lnk'
+
+    const postListSetting = document.createElement('span')
+    postListSetting.className = 'ntc'
+    postListSetting.textContent = '게시글 목록 설정'
+
+    a3.appendChild(postListSetting)
+
+    li3.appendChild(a3)
+
+    const li4 = document.createElement('li')
+
+    const a4 = document.createElement('a')
+    a4.className = 'noticeset-lnk'
+
+    const postSetting = document.createElement('span')
+    postSetting.className = 'ntc'
+    postSetting.textContent = '게시글 목록 설정'
+
+    a4.appendChild(postSetting)
+
+    li4.appendChild(a4)
+
     mdcmsetLst.appendChild(li1)
     Object.values(Setting.settings.topMenu).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
     mdcmsetLst.appendChild(li2)
     Object.values(Setting.settings.mainPage).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
-    mdcmsetLst.appendChild(createSettingEntry(Setting.settings.showAuthorId, false))
+    mdcmsetLst.appendChild(li3)
+    Object.values(Setting.settings.postList).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
+    mdcmsetLst.appendChild(li4)
+    Object.values(Setting.settings.post).forEach(ts => mdcmsetLst.appendChild(createSettingEntry(ts, true)))
+    mdcmsetLst.appendChild(createSettingEntry(Setting.settings.hideDaum, false))
 
     return mdcmsetLst
 }
@@ -257,7 +287,9 @@ function hideMdcmSettingWindow(): void {
 function saveMdcmSetting(): void {
     Object.values(Setting.settings.topMenu).forEach(s => s.save())
     Object.values(Setting.settings.mainPage).forEach(s => s.save())
-    Setting.settings.showAuthorId.save()
+    Object.values(Setting.settings.postList).forEach(s => s.save())
+    Object.values(Setting.settings.post).forEach(s => s.save())
+    Setting.settings.hideDaum.save()
     hideMdcmSettingWindow()
 }
 
@@ -266,7 +298,9 @@ function resetSetting(): void {
         Setting.settings.isDarkSet.reset()
         Object.values(Setting.settings.mainPage).forEach(s => s.reset())
         Object.values(Setting.settings.topMenu).forEach(s => s.reset())
-        Setting.settings.showAuthorId.reset()
+        Object.values(Setting.settings.postList).forEach(s => s.reset())
+        Object.values(Setting.settings.post).forEach(s => s.reset())
+        Setting.settings.hideDaum.reset()
         location.reload()
     }
 }
