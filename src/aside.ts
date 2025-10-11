@@ -1,8 +1,13 @@
-// 어사이드
+// MoreDCM 설정 페이지 관련 기능
 import {Setting} from "./Setting"
 
+// MoreDCM 설정 창 요소
 let mdcmSettingWindow: HTMLDivElement
 
+/**
+ * MoreDCM 설정 메뉴를 추가하는 함수
+ * 설정 페이지(/aside)에서만 실행됨
+ */
 export function addMoreDCMSetting(): void {
     if (location.pathname === '/aside') {
         addSettingEntry()
@@ -11,6 +16,9 @@ export function addMoreDCMSetting(): void {
     }
 }
 
+/**
+ * 설정 페이지에 MoreDCM 설정 항목을 추가하는 함수
+ */
 function addSettingEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
@@ -47,6 +55,9 @@ function addSettingEntry(): void {
     lst.appendChild(li)
 }
 
+/**
+ * 설정 페이지에 MoreDCM 설정 초기화 항목을 추가하는 함수
+ */
 function addResetEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
@@ -83,6 +94,9 @@ function addResetEntry(): void {
     lst.appendChild(li)
 }
 
+/**
+ * MoreDCM 설정 팝업 창을 생성하고 페이지에 추가하는 함수
+ */
 function addSettingWindow(): void {
     mdcmSettingWindow = document.createElement('div')
     mdcmSettingWindow.id = 'mdcm-setting'
@@ -101,6 +115,10 @@ function addSettingWindow(): void {
     document.body.appendChild(mdcmSettingWindow)
 }
 
+/**
+ * 설정 팝업의 제목 영역을 생성하는 함수
+ * @returns 제목 영역 div 요소
+ */
 function createLyTitBox(): HTMLDivElement {
     const lyTitBox = document.createElement('div')
     lyTitBox.className = 'ly-tit-box'
@@ -130,6 +148,10 @@ function createLyTitBox(): HTMLDivElement {
     return lyTitBox
 }
 
+/**
+ * 설정 항목 목록을 생성하는 함수
+ * @returns 설정 항목 목록 ul 요소
+ */
 function createMdcmsetLst(): HTMLUListElement {
     const mdcmsetLst = document.createElement('ul')
     mdcmsetLst.className = 'noticeset-lst'
@@ -199,6 +221,12 @@ function createMdcmsetLst(): HTMLUListElement {
     return mdcmsetLst
 }
 
+/**
+ * 개별 설정 항목을 생성하는 함수
+ * @param ts 설정 객체
+ * @param depth 하위 항목 여부
+ * @returns 설정 항목 li 요소
+ */
 function createSettingEntry(ts: Setting, depth: boolean): HTMLLIElement {
     const entry = document.createElement('li')
 
@@ -246,6 +274,11 @@ function createSettingEntry(ts: Setting, depth: boolean): HTMLLIElement {
     return entry
 }
 
+/**
+ * 토글 버튼의 상태를 업데이트하는 함수
+ * @param label 토글 버튼 요소
+ * @param ts 설정 객체
+ */
 function updateToggle(label: HTMLLabelElement, ts: Setting): void {
     const value = !ts.value
 
@@ -258,6 +291,10 @@ function updateToggle(label: HTMLLabelElement, ts: Setting): void {
     }
 }
 
+/**
+ * 설정 팝업 하단의 버튼 영역을 생성하는 함수
+ * @returns 버튼 영역 div 요소
+ */
 function createBtmBtnsCtr(): HTMLDivElement {
     const btmBtnsCtr = document.createElement('div')
     btmBtnsCtr.className = 'btm-btns-ctr'
@@ -280,14 +317,23 @@ function createBtmBtnsCtr(): HTMLDivElement {
     return btmBtnsCtr
 }
 
+/**
+ * MoreDCM 설정 팝업을 표시하는 함수
+ */
 function showMdcmSettingWindow(): void {
     mdcmSettingWindow.style = 'display: block'
 }
 
+/**
+ * MoreDCM 설정 팝업을 숨기는 함수
+ */
 function hideMdcmSettingWindow(): void {
     mdcmSettingWindow.style = 'display: none'
 }
 
+/**
+ * MoreDCM 설정을 저장하는 함수
+ */
 function saveMdcmSetting(): void {
     Object.values(Setting.settings.topMenu).forEach(s => s.save())
     Object.values(Setting.settings.mainPage).forEach(s => s.save())
@@ -297,6 +343,9 @@ function saveMdcmSetting(): void {
     hideMdcmSettingWindow()
 }
 
+/**
+ * MoreDCM 설정을 초기화하는 함수
+ */
 function resetSetting(): void {
     if (confirm('정말로 초기화할까요?')) {
         Setting.settings.isDarkSet.reset()
