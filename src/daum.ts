@@ -12,7 +12,9 @@ export function hideDaum(): void {
         const container = daumTit.parentElement?.parentElement
 
         if (!container) {
-            throw Error('daum parent')
+            console.warn('daum parent')
+
+            return
         }
 
         container.remove()

@@ -17,13 +17,17 @@ function getPostAuthorId(): void {
     const ginfo2 = document.getElementsByClassName('ginfo2').item(0)
 
     if (!ginfo2) {
-        throw Error('ginfo2')
+        console.warn('ginfo2 not found')
+        
+        return
     }
 
     const li = ginfo2.children.item(0) as HTMLLIElement | null
 
     if (!li) {
-        throw Error('li')
+        console.warn('li not found')
+
+        return
     }
 
     const a = li.children.item(0) as HTMLAnchorElement | null
@@ -36,7 +40,9 @@ function getPostAuthorId(): void {
     const spnick = Array.from(a.children).find(ce => ce.classList.contains('sp-nick') || ce.classList.contains('icon_event'))
 
     if (!spnick) {
-        throw Error('sp-nick')
+        console.warn('sp-nick not found')
+
+        return
     }
 
     const span = document.createElement('span')
@@ -75,13 +81,17 @@ function hideUnwantedItems(): void {
         const btmcon = document.getElementsByClassName('view-btm-con').item(0)
 
         if (!btmcon) {
-            throw Error('하단 콘텐츠를 찾을 수 없습니다.')
+            console.warn('하단 콘텐츠를 찾을 수 없습니다.')
+
+            return
         }
 
         const container = btmcon.parentElement
 
         if (!container) {
-            throw Error('btmcon parent')
+            console.warn('btmcon parent')
+
+            return
         }
 
         container.remove()

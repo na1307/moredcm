@@ -27,10 +27,6 @@ export function hideUnwantedMenuItems(): void {
         removeEntryByName(entries, 'BJ방송')
     }
 
-    if (Setting.settings.topMenu.hideTrend.value) {
-        removeEntryByName(entries, '트렌드')
-    }
-
     if (Setting.settings.topMenu.hideGame.value) {
         removeEntryByName(entries, '게임')
     }
@@ -68,7 +64,9 @@ function removeEntryByName(elements: Element[], name: string): void {
     const element = elements.find(c => c.children.item(0)?.textContent === name);
 
     if (!element) {
-        throw new Error(`Element ${name} not found`)
+        console.warn(`${name} 상단 메뉴 항목을 찾을 수 없습니다!`)
+
+        return
     }
 
     element.remove()

@@ -15,7 +15,9 @@ function addSettingEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
     if (!lst) {
-        throw Error("설정 리스트를 찾을 수 없습니다.")
+        console.warn("설정 리스트를 찾을 수 없습니다.")
+
+        return
     }
 
     const li = document.createElement('li')
@@ -49,7 +51,9 @@ function addResetEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
     if (!lst) {
-        throw Error("설정 리스트를 찾을 수 없습니다.")
+        console.warn("설정 리스트를 찾을 수 없습니다.")
+
+        return
     }
 
     const li = document.createElement('li')

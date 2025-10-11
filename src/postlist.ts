@@ -2,7 +2,6 @@
 import {getPostList} from "@gurumnyang/dcinside.js";
 import {Setting} from "./Setting";
 
-// @ts-ignore
 let oldLM: any
 let currentPage: number
 
@@ -20,9 +19,9 @@ export function getPostAuthorIdOrIp(): void {
             getPostAuthorId()
         }
 
-        currentPage = parseInt(location.href.split('page=')[1])
+        currentPage = Number.parseInt(location.href.split('page=')[1])
 
-        if (isNaN(currentPage)) {
+        if (Number.isNaN(currentPage)) {
             currentPage = 1
         }
 
@@ -41,19 +40,25 @@ function getPostAuthorId(): void {
                 const lnktb = Array.from(e.children).find(ce => ce.classList.contains('gall-detail-lnktb'))
 
                 if (!lnktb) {
-                    throw Error('gall-detail-lnktb')
+                    console.warn('gall-detail-lnktb not found')
+
+                    return
                 }
 
                 const lt = Array.from(lnktb.children).find(ce => ce.classList.contains('lt'))
 
                 if (!lt) {
-                    throw Error('lt')
+                    console.warn('lt not found')
+
+                    return
                 }
 
                 const ginfo = Array.from(lt.children).find(ce => ce.classList.contains('ginfo'))
 
                 if (!ginfo) {
-                    throw Error('ginfo')
+                    console.warn('ginfo not found')
+
+                    return
                 }
 
                 const spnick = Array.from(ginfo.children).flatMap(ce => Array.from(ce.children)).find(ce => ce.classList.contains('sp-nick') || ce.classList.contains('icon_event'))
