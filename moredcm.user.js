@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MoreDCM
 // @namespace    npm/vite-plugin-monkey
-// @version      1.0-alpha.2
+// @version      1.0-alpha.3
 // @author       Bluehill
 // @description  dcinside mobile web enhancer
 // @license      MIT
