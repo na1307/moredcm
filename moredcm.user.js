@@ -26,7 +26,6 @@
       topMenu: {
         hidePr: new Setting("hidePr", "인물갤 숨기기"),
         hideBj: new Setting("hideBj", "BJ방송 숨기기"),
-        hideTrend: new Setting("hideTrendMenu", "트렌드 숨기기"),
         hideGame: new Setting("hideGame", "게임 숨기기"),
         hideEvent: new Setting("hideEvent", "이벤트 숨기기")
       },
@@ -102,9 +101,6 @@
     if (Setting.settings.topMenu.hideBj.value) {
       removeEntryByName(entries, "BJ방송");
     }
-    if (Setting.settings.topMenu.hideTrend.value) {
-      removeEntryByName(entries, "트렌드");
-    }
     if (Setting.settings.topMenu.hideGame.value) {
       removeEntryByName(entries, "게임");
     }
@@ -136,7 +132,8 @@
   function removeEntryByName(elements, name) {
     const element = elements.find((c) => c.children.item(0)?.textContent === name);
     if (!element) {
-      throw new Error(`Element ${name} not found`);
+      console.warn(`${name} 상단 메뉴 항목을 찾을 수 없습니다!`);
+      return;
     }
     element.remove();
     elements.splice(elements.indexOf(element), 1);
@@ -180,7 +177,8 @@
   function addSettingEntry() {
     const lst = document.getElementsByClassName("all-setting-lst").item(0);
     if (!lst) {
-      throw Error("설정 리스트를 찾을 수 없습니다.");
+      console.warn("설정 리스트를 찾을 수 없습니다.");
+      return;
     }
     const li = document.createElement("li");
     const tit = document.createElement("span");
@@ -204,7 +202,8 @@
   function addResetEntry() {
     const lst = document.getElementsByClassName("all-setting-lst").item(0);
     if (!lst) {
-      throw Error("설정 리스트를 찾을 수 없습니다.");
+      console.warn("설정 리스트를 찾을 수 없습니다.");
+      return;
     }
     const li = document.createElement("li");
     const tit = document.createElement("span");
@@ -20484,8 +20483,8 @@ getMobilePostContent: post2.getMobilePostContent,
         currentPage++;
         getPostAuthorId$1();
       };
-      currentPage = parseInt(location.href.split("page=")[1]);
-      if (isNaN(currentPage)) {
+      currentPage = Number.parseInt(location.href.split("page=")[1]);
+      if (Number.isNaN(currentPage)) {
         currentPage = 1;
       }
       getPostAuthorId$1();
@@ -20499,15 +20498,18 @@ getMobilePostContent: post2.getMobilePostContent,
       const gonickPosts = Array.from(lst.children).filter((e) => !e.classList.contains("adv-inner")).map((e) => {
         const lnktb = Array.from(e.children).find((ce) => ce.classList.contains("gall-detail-lnktb"));
         if (!lnktb) {
-          throw Error("gall-detail-lnktb");
+          console.warn("gall-detail-lnktb not found");
+          return;
         }
         const lt = Array.from(lnktb.children).find((ce) => ce.classList.contains("lt"));
         if (!lt) {
-          throw Error("lt");
+          console.warn("lt not found");
+          return;
         }
         const ginfo = Array.from(lt.children).find((ce) => ce.classList.contains("ginfo"));
         if (!ginfo) {
-          throw Error("ginfo");
+          console.warn("ginfo not found");
+          return;
         }
         const spnick = Array.from(ginfo.children).flatMap((ce) => Array.from(ce.children)).find((ce) => ce.classList.contains("sp-nick") || ce.classList.contains("icon_event"));
         return spnick ? { postId: lt.href.split("/")[5], spnick } : null;
@@ -20553,11 +20555,13 @@ getMobilePostContent: post2.getMobilePostContent,
     }
     const ginfo2 = document.getElementsByClassName("ginfo2").item(0);
     if (!ginfo2) {
-      throw Error("ginfo2");
+      console.warn("ginfo2 not found");
+      return;
     }
     const li = ginfo2.children.item(0);
     if (!li) {
-      throw Error("li");
+      console.warn("li not found");
+      return;
     }
     const a = li.children.item(0);
     if (!a) {
@@ -20565,7 +20569,8 @@ getMobilePostContent: post2.getMobilePostContent,
     }
     const spnick = Array.from(a.children).find((ce) => ce.classList.contains("sp-nick") || ce.classList.contains("icon_event"));
     if (!spnick) {
-      throw Error("sp-nick");
+      console.warn("sp-nick not found");
+      return;
     }
     const span = document.createElement("span");
     span.className = "mdcm-user-id";
@@ -20593,11 +20598,13 @@ getMobilePostContent: post2.getMobilePostContent,
     if (Setting.settings.post.hideBottomContents.value) {
       const btmcon = document.getElementsByClassName("view-btm-con").item(0);
       if (!btmcon) {
-        throw Error("하단 콘텐츠를 찾을 수 없습니다.");
+        console.warn("하단 콘텐츠를 찾을 수 없습니다.");
+        return;
       }
       const container = btmcon.parentElement;
       if (!container) {
-        throw Error("btmcon parent");
+        console.warn("btmcon parent");
+        return;
       }
       container.remove();
     }
@@ -20610,7 +20617,8 @@ getMobilePostContent: post2.getMobilePostContent,
       }
       const container = daumTit.parentElement?.parentElement;
       if (!container) {
-        throw Error("daum parent");
+        console.warn("daum parent");
+        return;
       }
       container.remove();
     }
