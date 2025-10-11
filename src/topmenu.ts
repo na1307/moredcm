@@ -50,15 +50,12 @@ export function hideUnwantedMenuItems(): void {
             entry.classList.add('swiper-slide')
 
             if (entry.parentElement === depthbox) {
-                depthbox.removeChild(entry)
+                entry.remove()
                 topmenuUl.appendChild(entry)
             }
-        } else {
-            // 나머지는 더보기 메뉴로 이동
-            if (entry.parentElement === topmenuUl) {
-                topmenuUl.removeChild(entry)
-                depthbox.appendChild(entry)
-            }
+        } else if (entry.parentElement === topmenuUl) { // 나머지는 더보기 메뉴로 이동
+            entry.remove()
+            depthbox.appendChild(entry)
         }
     })
 

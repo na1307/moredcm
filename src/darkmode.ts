@@ -17,7 +17,7 @@ export function setDarkModeDefault(): void {
             value: 'done',
             domain: '.dcinside.com',
             path: '/',
-            expirationDate: new Date().getTime() + 60 * 60 * 24 * 365 // 1년
+            expirationDate: Date.now() + 60 * 60 * 24 * 365 // 1년
         })
 
         // 디시인사이드 다크 모드 정보 쿠키 설정
@@ -26,7 +26,7 @@ export function setDarkModeDefault(): void {
             value: 'done',
             domain: '.dcinside.com',
             path: '/',
-            expirationDate: new Date().getTime() + 60 * 60 * 24 * 365 // 1년
+            expirationDate: Date.now() + 60 * 60 * 24 * 365 // 1년
         })
 
         // 다크 모드 설정 완료 플래그 저장

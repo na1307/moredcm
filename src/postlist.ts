@@ -59,7 +59,7 @@ function getPostAuthorId(): void {
                 if (!lnktb) {
                     console.warn('gall-detail-lnktb not found')
 
-                    return
+                    return null
                 }
 
                 // 게시글 링크 요소 찾기
@@ -68,7 +68,7 @@ function getPostAuthorId(): void {
                 if (!lt) {
                     console.warn('lt not found')
 
-                    return
+                    return null
                 }
 
                 // 작성자 정보 영역 찾기
@@ -77,7 +77,7 @@ function getPostAuthorId(): void {
                 if (!ginfo) {
                     console.warn('ginfo not found')
 
-                    return
+                    return null
                 }
 
                 // 닉네임 요소 찾기 (고정닉만 해당)
@@ -86,7 +86,7 @@ function getPostAuthorId(): void {
                 // 게시글 ID와 닉네임 요소를 반환 (고정닉인 경우만)
                 return spnick ? {postId: (lt as HTMLAnchorElement).href.split('/')[5], spnick: spnick} : null
             })
-            .filter(e => e) as { postId: string, spnick: Element }[]
+            .filter(e => e !== null)
 
         // API를 통해 게시글 목록 정보 가져오기
         const pis = await getPostList({
