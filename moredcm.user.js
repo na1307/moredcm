@@ -69,14 +69,14 @@ reset() {
         value: "done",
         domain: ".dcinside.com",
         path: "/",
-        expirationDate: ( new Date()).getTime() + 60 * 60 * 24 * 365
+        expirationDate: Date.now() + 60 * 60 * 24 * 365
 });
       _GM_cookie.set({
         name: "m_dcinside_darkmode_info",
         value: "done",
         domain: ".dcinside.com",
         path: "/",
-        expirationDate: ( new Date()).getTime() + 60 * 60 * 24 * 365
+        expirationDate: Date.now() + 60 * 60 * 24 * 365
 });
       ids.value = true;
       ids.save();
@@ -112,14 +112,12 @@ reset() {
       if (index2 <= 5) {
         entry.classList.add("swiper-slide");
         if (entry.parentElement === depthbox) {
-          depthbox.removeChild(entry);
+          entry.remove();
           topmenuUl.appendChild(entry);
         }
-      } else {
-        if (entry.parentElement === topmenuUl) {
-          topmenuUl.removeChild(entry);
-          depthbox.appendChild(entry);
-        }
+      } else if (entry.parentElement === topmenuUl) {
+        entry.remove();
+        depthbox.appendChild(entry);
       }
     });
     if (entries.length <= 6) {
@@ -20500,21 +20498,21 @@ getMobilePostContent: post2.getMobilePostContent,
         const lnktb = Array.from(e.children).find((ce) => ce.classList.contains("gall-detail-lnktb"));
         if (!lnktb) {
           console.warn("gall-detail-lnktb not found");
-          return;
+          return null;
         }
         const lt = Array.from(lnktb.children).find((ce) => ce.classList.contains("lt"));
         if (!lt) {
           console.warn("lt not found");
-          return;
+          return null;
         }
         const ginfo = Array.from(lt.children).find((ce) => ce.classList.contains("ginfo"));
         if (!ginfo) {
           console.warn("ginfo not found");
-          return;
+          return null;
         }
         const spnick = Array.from(ginfo.children).flatMap((ce) => Array.from(ce.children)).find((ce) => ce.classList.contains("sp-nick") || ce.classList.contains("icon_event"));
         return spnick ? { postId: lt.href.split("/")[5], spnick } : null;
-      }).filter((e) => e);
+      }).filter((e) => e !== null);
       const pis = await distExports.getPostList({
         page: currentPage,
         galleryId: location.pathname.split("/")[2],
