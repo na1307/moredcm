@@ -3,7 +3,10 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: monthly
+      interval: weekly
+      day: wednesday
+      time: "09:00"
+      timezone: Asia/Seoul
     assignees:
       - na1307
     pull-request-branch-name:
