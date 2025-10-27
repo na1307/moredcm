@@ -83,7 +83,185 @@ describe('postListFunction', () => {
         vi.useRealTimers()
     })
 
+    test('lnktb 없음', async () => {
+        document.body.innerHTML = `
+            <ul class="gall-detail-lst">
+                <li>
+                    <div>
+                        <a href="/board/test/12345" class="lt">
+                            <ul class="ginfo">
+                                <li>
+                                    고정닉1
+                                    <span class="sp-nick"></span>
+                                </li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="/board/test/54321" class="lt">
+                            <ul class="ginfo">
+                                <li>유동닉(127.0)</li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button id="listMore"></button>
+        `
+
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.sp-nick')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).toBeNull()
+            expect(userIdSpan?.textContent).not.toBe('(user1)')
+        })
+    })
+
+    test('lt 없음',async()=>{
+        document.body.innerHTML = `
+            <ul class="gall-detail-lst">
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/12345">
+                            <ul class="ginfo">
+                                <li>
+                                    고정닉1
+                                    <span class="sp-nick"></span>
+                                </li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/54321">
+                            <ul class="ginfo">
+                                <li>유동닉(127.0)</li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button id="listMore"></button>
+        `
+
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.sp-nick')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).toBeNull()
+            expect(userIdSpan?.textContent).not.toBe('(user1)')
+        })
+    })
+
+    test('ginfo 없음',async()=>{
+        document.body.innerHTML = `
+            <ul class="gall-detail-lst">
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/12345" class="lt">
+                            <ul>
+                                <li>
+                                    고정닉1
+                                    <span class="sp-nick"></span>
+                                </li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/54321" class="lt">
+                            <ul>
+                                <li>유동닉(127.0)</li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button id="listMore"></button>
+        `
+
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.sp-nick')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).toBeNull()
+            expect(userIdSpan?.textContent).not.toBe('(user1)')
+        })
+    })
+
+    test('페이지 로드 시 작성자 ID를 표시해야 함 (1페이지)', async () => {
+        vi.stubGlobal('location', {
+            href: 'https://m.dcinside.com/board/test',
+            pathname: '/board/test'
+        })
+
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.sp-nick')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).not.toBeNull()
+            expect(userIdSpan?.textContent).toBe('(user1)')
+        })
+    })
+
     test('페이지 로드 시 작성자 ID를 표시해야 함', async () => {
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.sp-nick')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).not.toBeNull()
+            expect(userIdSpan?.textContent).toBe('(user1)')
+        })
+    })
+
+    test('페이지 로드 시 작성자 ID를 표시해야 함 (실베 아이콘)', async () => {
+        document.body.innerHTML = `
+            <ul class="gall-detail-lst">
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/12345" class="lt">
+                            <ul class="ginfo">
+                                <li>
+                                    고정닉1
+                                    <span class="icon_event"></span>
+                                </li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="gall-detail-lnktb">
+                        <a href="/board/test/54321" class="lt">
+                            <ul class="ginfo">
+                                <li>유동닉(127.0)</li>
+                            </ul>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button id="listMore"></button>
+        `
+
+        await postListFunction()
+        await vi.waitFor(() => {
+            const fixedNickElement = document.querySelector('.icon_event')
+            const userIdSpan = fixedNickElement?.parentElement?.querySelector('.mdcm-user-id')
+            expect(userIdSpan).not.toBeNull()
+            expect(userIdSpan?.textContent).toBe('(user1)')
+        })
+    })
+
+    test('페이지 로드 시 작성자 ID를 표시해야 함 (개념글)', async () => {
+        vi.stubGlobal('location', {
+            href: 'https://m.dcinside.com/board/test?recommend=1',
+            pathname: '/board/test'
+        })
+
         await postListFunction()
         await vi.waitFor(() => {
             const fixedNickElement = document.querySelector('.sp-nick')

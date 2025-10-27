@@ -41,6 +41,29 @@ describe('hideUnwantedMenuItems', () => {
         Setting.settings.topMenu.hideEvent.value = false
     })
 
+    test('topmenu 없음', () => {
+        document.body.innerHTML = `
+            <button id="topmenu_toggle_btn"></button>
+            <div id="topmenu_depthbox">
+                ${['BJ방송', '게임', '이벤트', '뉴스', '만화', 'HIT'].map(name => `<li><a>${name}</a></li>`).join('')}
+            </div>
+        `
+        hideUnwantedMenuItems()
+        expect(document.getElementById('topmenu')).toBeNull()
+    })
+
+    test('topmenuUl 없음', () => {
+        document.body.innerHTML = `
+            <div id="topmenu"></div>
+            <button id="topmenu_toggle_btn"></button>
+            <div id="topmenu_depthbox">
+                ${['BJ방송', '게임', '이벤트', '뉴스', '만화', 'HIT'].map(name => `<li><a>${name}</a></li>`).join('')}
+            </div>
+        `
+        hideUnwantedMenuItems()
+        expect(document.querySelector('#topmenu > ul')).toBeNull()
+    })
+
     test('아무것도 숨기지 않아야 함', () => {
         hideUnwantedMenuItems()
         const topmenuUl = document.querySelector('#topmenu > ul')!

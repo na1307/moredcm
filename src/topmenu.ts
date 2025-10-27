@@ -53,10 +53,6 @@ export function hideUnwantedMenuItems(): void {
                 entry.remove()
                 topmenuUl.appendChild(entry)
             }
-        } else if (entry.parentElement === topmenuUl) {
-            // 나머지는 더보기 메뉴로 이동
-            entry.remove()
-            depthbox.appendChild(entry)
         }
     })
 

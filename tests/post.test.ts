@@ -59,7 +59,144 @@ describe('post.ts', () => {
     })
 
     describe('getPostAuthorId', () => {
+        it('ginfo2 not found',()=>{
+            document.body.innerHTML = `
+      <section>
+        <div class="view-btm-con"></div>
+      </section>
+    `
+            Setting.settings.post.showPostAuthorId.value = true
+            postFunction()
+            const authorElement = document.querySelector('.ginfo2 a')!
+            expect(authorElement).toBeNull()
+        })
+
+        it('li not found', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2"></ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+      <section>
+        <div class="view-btm-con"></div>
+      </section>
+    `
+            Setting.settings.post.showPostAuthorId.value = true
+            postFunction()
+            const authorElement = document.querySelector('.ginfo2 a')!
+            expect(authorElement).toBeNull()
+        })
+
+        it('a not found', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2">
+        <li>
+          ㅇㅇ(127.0)
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+      <section>
+        <div class="view-btm-con"></div>
+      </section>
+    `
+            Setting.settings.post.showPostAuthorId.value = true
+            postFunction()
+            const authorElement = document.querySelector('.ginfo2 a')!
+            expect(authorElement).toBeNull()
+        })
+
+        it('spnick not found', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2">
+        <li>
+          <a href="https://m.dcinside.com/gallog/unyeongja">
+            Author
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+      <section>
+        <div class="view-btm-con"></div>
+      </section>
+    `
+            Setting.settings.post.showPostAuthorId.value = true
+            postFunction()
+            const authorElement = document.querySelector('.ginfo2 a')!
+            expect(authorElement.innerHTML).not.toContain('(unyeongja)')
+        })
+
         it('should add post author ID if setting is enabled', () => {
+            Setting.settings.post.showPostAuthorId.value = true
+            postFunction()
+            const authorElement = document.querySelector('.ginfo2 a')!
+            expect(authorElement.innerHTML).toContain('(unyeongja)')
+        })
+
+        it('should add post author ID if setting is enabled (Silbe)', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2">
+        <li>
+          <a href="https://m.dcinside.com/gallog/unyeongja">
+            Author
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="icon_event"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+      <section>
+        <div class="view-btm-con"></div>
+      </section>
+    `
             Setting.settings.post.showPostAuthorId.value = true
             postFunction()
             const authorElement = document.querySelector('.ginfo2 a')!
@@ -91,6 +228,67 @@ describe('post.ts', () => {
     })
 
     describe('hideUnwantedItems', () => {
+        it('btmcon not found', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2">
+        <li>
+          <a href="https://m.dcinside.com/gallog/unyeongja">
+            Author
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+      <section></section>
+    `
+            Setting.settings.post.hideBottomContents.value = true
+            postFunction()
+            expect(document.querySelector('.view-btm-con')).toBeNull()
+        })
+
+        it('btmcon parent not found', () => {
+            document.body.innerHTML = `
+      <ul class="ginfo2">
+        <li>
+          <a href="https://m.dcinside.com/gallog/unyeongja">
+            Author
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="https://m.dcinside.com/gallog/di01" class="nick">
+            Commenter1
+            <span class="sp-nick"></span>
+          </a>
+        </li>
+        <li>
+          <a class="nick">
+            ㅇㅇ
+            <span class="ip">(127.0)</span>
+          </a>
+        </li>
+      </ul>
+    `
+            Setting.settings.post.hideBottomContents.value = true
+            postFunction()
+            expect(document.querySelector('.view-btm-con')).toBeNull()
+        })
+
         it('should hide bottom contents if setting is enabled', () => {
             Setting.settings.post.hideBottomContents.value = true
             postFunction()

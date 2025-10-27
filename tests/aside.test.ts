@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { assert, beforeEach, describe, expect, it, vi } from 'vitest'
 import { addMoreDCMSetting } from '../src/aside'
 import { Setting } from '../src/Setting'
 
@@ -7,7 +7,7 @@ vi.mock('../src/Setting', () => ({
     Setting: {
         settings: {
             isDarkSet: { value: false, save: vi.fn(), reset: vi.fn() },
-            topMenu: {},
+            topMenu: { hideBj: { id: 'hideBj', title: 'BJ방송 숨기기', value: true, save: vi.fn(), reset: vi.fn() } },
             mainPage: {},
             postList: {},
             post: {},
@@ -15,9 +15,6 @@ vi.mock('../src/Setting', () => ({
         }
     }
 }))
-
-// Mock window.confirm
-global.confirm = vi.fn(() => true)
 
 // Mock location.reload
 Object.defineProperty(window, 'location', {
@@ -44,6 +41,17 @@ describe('aside.ts', () => {
             expect(settingList.textContent).toContain('MoreDCM 설정')
             expect(settingList.textContent).toContain('MoreDCM 설정 초기화')
             expect(document.getElementById('mdcm-setting')).not.toBeNull()
+        })
+
+        it('should not add setting entries and window if on /aside page but all-setting-lst not found', () => {
+            document.body.innerHTML = ''
+
+            // Act
+            addMoreDCMSetting()
+
+            // Assert
+            expect(document.querySelector('.all-setting-lst')).toBeNull()
+            expect(document.getElementById('mdcm-setting')).toBeNull()
         })
 
         it('should not add anything if not on /aside page', () => {
@@ -103,8 +111,9 @@ describe('aside.ts', () => {
             expect(settingWindow.style.display).toBe('none')
         })
 
-        it('should reset settings when reset button is clicked', () => {
+        it('should reset settings when reset button is clicked and ok is clicked', () => {
             addMoreDCMSetting()
+            global.confirm = vi.fn(() => true)
             const resetButton = document.evaluate("//button[text()='초기화']", document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
                 .singleNodeValue as HTMLButtonElement
 
@@ -114,6 +123,36 @@ describe('aside.ts', () => {
             expect(Setting.settings.isDarkSet.reset).toHaveBeenCalled()
             expect(Setting.settings.hideDaum.reset).toHaveBeenCalled()
             expect(location.reload).toHaveBeenCalled()
+        })
+
+        it('should not reset settings when reset button is clicked and cancel is clicked', () => {
+            addMoreDCMSetting()
+            global.confirm = vi.fn(() => false)
+            const resetButton = document.evaluate("//button[text()='초기화']", document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+                .singleNodeValue as HTMLButtonElement
+
+            resetButton.click()
+
+            expect(global.confirm).toHaveBeenCalledWith('정말로 초기화할까요?')
+            expect(Setting.settings.isDarkSet.reset).not.toHaveBeenCalled()
+            expect(Setting.settings.hideDaum.reset).not.toHaveBeenCalled()
+            expect(location.reload).not.toHaveBeenCalled()
+        })
+
+        it('toggle clicked when enabled', ()=>{
+            addMoreDCMSetting()
+
+            document.getElementById('mdcm-hidebj')!.click()
+
+            assert(!Setting.settings.topMenu.hideBj.value)
+        })
+
+        it('toggle clicked when disabled', () => {
+            addMoreDCMSetting()
+
+            document.getElementById('mdcm-hidedaum')!.click()
+
+            assert(Setting.settings.hideDaum.value)
         })
     })
 })

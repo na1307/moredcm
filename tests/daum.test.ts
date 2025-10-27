@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, assert } from 'vitest'
 import { hideDaum } from '../src/daum'
 import { Setting } from '../src/Setting'
 
@@ -19,7 +19,7 @@ describe('daum.ts', () => {
       <div>
         <div class="md-tit">다른 검색</div>
         <div class="md-tit-box">
-          <h4 class="md-tit">다음 검색</h4>
+          <div class="md-tit">다음 검색</div>
         </div>
       </div>
     `
@@ -47,5 +47,38 @@ describe('daum.ts', () => {
         // Assert
         const daumTit = Array.from(document.getElementsByClassName('md-tit')).find(e => e.textContent === '다음 검색')
         expect(daumTit).not.toBeUndefined()
+    })
+
+    it('Daum search not found', () => {
+        const org = `
+      <div>
+        <div class="md-tit">다른 검색</div>
+        <div class="md-tit-box"></div>
+      </div>
+    `
+
+        document.body.innerHTML = org
+
+        hideDaum()
+
+        assert(document.body.innerHTML === org)
+        const daumTit = Array.from(document.getElementsByClassName('md-tit')).find(e => e.textContent === '다음 검색')
+        expect(daumTit).toBeUndefined()
+    })
+
+    it('Daum search parent not found', () => {
+        const org = `
+      <div>
+        <div class="md-tit">다른 검색</div>
+      </div>
+    `
+
+        document.body.innerHTML = org
+
+        hideDaum()
+
+        assert(document.body.innerHTML === org)
+        const daumTit = Array.from(document.getElementsByClassName('md-tit')).find(e => e.textContent === '다음 검색')
+        expect(daumTit).toBeUndefined()
     })
 })

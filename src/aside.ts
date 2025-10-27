@@ -98,6 +98,12 @@ function addResetEntry(): void {
  * MoreDCM 설정 팝업 창을 생성하고 페이지에 추가하는 함수
  */
 function addSettingWindow(): void {
+    if (!document.getElementsByClassName('all-setting-lst').item(0)) {
+        console.warn('설정 리스트를 찾을 수 없습니다.')
+
+        return
+    }
+
     mdcmSettingWindow = document.createElement('div')
     mdcmSettingWindow.id = 'mdcm-setting'
     mdcmSettingWindow.classList.add('layer-center-popup', 'full')
