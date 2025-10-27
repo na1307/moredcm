@@ -17,14 +17,6 @@ vi.mock('../src/Setting', () => ({
 }))
 
 // DOM 구조 생성 함수
-const createMenuItem = (name: string): HTMLLIElement => {
-    const li = document.createElement('li')
-    const a = document.createElement('a')
-    a.textContent = name
-    li.appendChild(a)
-    return li
-}
-
 const setupDOM = () => {
     document.body.innerHTML = `
         <div id="topmenu">
