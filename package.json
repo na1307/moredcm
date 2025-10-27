@@ -5,21 +5,32 @@
   "description": "dcinside mobile web enhancer",
   "author": "Bluehill",
   "license": "MIT",
+  "homepage": "https://github.com/na1307/blazor-github-pages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/na1307/moredcm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/na1307/moredcm/issues"
+  },
+  "keywords": [
+    "dcinside",
+    "tampermonkey"
+  ],
   "type": "module",
-  "packageManager": "pnpm@10.18.2",
+  "packageManager": "pnpm@10.19.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "sonar": "sonar"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@sonar/scan": "^4.3.2",
     "typescript": "^5.9.3",
-    "vite": "^7.1.9",
+    "vite": "^7.1.12",
     "vite-plugin-monkey": "^7.1.4"
   },
   "dependencies": {
-    "@gurumnyang/dcinside.js": "^1.8.0"
+    "@gurumnyang/dcinside.js": "^1.9.0"
   }
 }
