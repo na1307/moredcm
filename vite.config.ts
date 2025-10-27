@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import monkey from 'vite-plugin-monkey'
 
@@ -14,5 +15,13 @@ export default defineConfig({
                 grant: ['GM_getValue', 'GM_setValue', 'GM_deleteValue', 'GM_cookie']
             }
         })
-    ]
+    ],
+    test: {
+        environment: 'jsdom',
+        coverage: {
+            include: ['src/*.ts'],
+            provider: 'v8',
+            reporter: ['lcovonly']
+        }
+    }
 })

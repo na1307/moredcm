@@ -11,7 +11,7 @@ let currentPage: number
  * 게시글 목록 페이지에서 작성자 ID를 표시하는 함수
  * "더보기" 기능을 후킹하여 새로 로드된 게시글에도 ID를 표시함
  */
-export function getPostAuthorIdOrIp(): void {
+export async function postListFunction(): Promise<void> {
     // 게시판 또는 미니갤러리이고, 검색 결과가 아니며, "더보기" 버튼이 있는 경우
     if (
         (location.pathname.startsWith('/board/') || location.pathname.startsWith('/mini/')) &&
@@ -24,11 +24,12 @@ export function getPostAuthorIdOrIp(): void {
 
         // list_more 함수를 새로운 함수로 교체 (더보기 버튼 클릭 시 실행됨)
         // @ts-expect-error replace
-        list_more = async function (): void {
+        list_more = function (): void {
             oldLM() // 기존 함수 실행
-            await sleep(0.25) // 로딩 대기
-            currentPage++ // 페이지 증가
-            getPostAuthorId() // 새로 로드된 게시글에 ID 표시
+            sleep(0.15).then(() => {
+                currentPage++ // 페이지 증가
+                getPostAuthorId() // 새로 로드된 게시글에 ID 표시
+            })
         }
 
         // URL에서 현재 페이지 번호 추출
@@ -38,21 +39,20 @@ export function getPostAuthorIdOrIp(): void {
             currentPage = 1 // 페이지 번호가 없으면 1로 설정
         }
 
-        // 초기 게시글에 ID 표시
-        getPostAuthorId()
+        await getPostAuthorId()
     }
 }
 
 /**
  * 게시글 목록의 작성자 ID를 가져와서 표시하는 함수
  */
-function getPostAuthorId(): void {
+async function getPostAuthorId(): Promise<void> {
     if (!Setting.settings.postList.showPostListAuthorId.value) {
         return
     }
 
     // 모든 게시글 목록 요소를 가져와서 처리
-    Array.from(document.getElementsByClassName('gall-detail-lst')).forEach(async lst => {
+    for (const lst of Array.from(document.getElementsByClassName('gall-detail-lst'))) {
         // 고정닉 게시글 정보를 추출 (광고 제외)
         const gonickPosts = Array.from(lst.children)
             .filter(e => !e.classList.contains('adv-inner'))
@@ -129,7 +129,7 @@ function getPostAuthorId(): void {
                 parent.appendChild(span)
             })
         })
-    })
+    }
 }
 
 /**

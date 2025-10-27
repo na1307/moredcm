@@ -4,7 +4,7 @@ import { Setting } from './Setting'
 /**
  * 게시글 상세 페이지에서 작성자 ID를 표시하고 원하지 않는 콘텐츠를 숨기는 함수
  */
-export function getPostAuthorIdOrIpInPost(): void {
+export function postFunction(): void {
     // 게시글 상세 페이지인지 확인 (경로가 4개 부분으로 나뉨)
     if (location.pathname.split('/').length === 4) {
         getPostAuthorId()

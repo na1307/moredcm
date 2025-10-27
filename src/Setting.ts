@@ -39,7 +39,7 @@ export class Setting {
         },
         // 다음 검색 숨기기 설정
         hideDaum: new Setting('hideDaum', '게시글/검색 화면에서 다음 검색 숨기기')
-    }
+    } as const
 
     readonly id: string // 설정 ID (저장소 키)
     readonly title: string // 설정 제목 (UI에 표시)

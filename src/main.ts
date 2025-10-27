@@ -5,8 +5,8 @@ import { setDarkModeDefault } from './darkmode'
 import { hideUnwantedMenuItems } from './topmenu'
 import { hideUnwantedContents } from './mainpage'
 import { addMoreDCMSetting } from './aside'
-import { getPostAuthorIdOrIp } from './postlist'
-import { getPostAuthorIdOrIpInPost } from './post'
+import { postListFunction } from './postlist'
+import { postFunction } from './post'
 import { hideDaum } from './daum'
 
 // 다크 모드 자동 설정
@@ -17,9 +17,9 @@ hideUnwantedMenuItems()
 hideUnwantedContents()
 // 설정 페이지에 MoreDCM 설정 추가
 addMoreDCMSetting()
-// 게시글 목록에서 작성자 ID 표시
-getPostAuthorIdOrIp()
-// 게시글 내에서 작성자 ID 표시
-getPostAuthorIdOrIpInPost()
+// 게시글 목록
+postListFunction()
+// 게시글 내
+postFunction()
 // 다음 검색 영역 숨기기
 hideDaum()

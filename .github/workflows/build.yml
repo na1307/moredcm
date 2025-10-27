@@ -29,6 +29,8 @@ jobs:
         run: pnpm lint
       - name: Build
         run: pnpm build
+      - name: Test
+        run: pnpm ci-test --coverage
       - name: SonarCloud
         run: pnpm sonar
         env:
