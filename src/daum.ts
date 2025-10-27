@@ -1,5 +1,5 @@
 // 다음 검색 영역 숨기기 기능
-import {Setting} from "./Setting";
+import { Setting } from './Setting'
 
 /**
  * 디시인사이드 페이지에서 다음 검색 영역을 숨기는 함수

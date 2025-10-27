@@ -1,5 +1,5 @@
 // 상단 메뉴 숨기기 기능
-import {Setting} from "./Setting";
+import { Setting } from './Setting'
 
 /**
  * 상단 메뉴에서 원하지 않는 항목을 숨기는 함수
@@ -53,7 +53,8 @@ export function hideUnwantedMenuItems(): void {
                 entry.remove()
                 topmenuUl.appendChild(entry)
             }
-        } else if (entry.parentElement === topmenuUl) { // 나머지는 더보기 메뉴로 이동
+        } else if (entry.parentElement === topmenuUl) {
+            // 나머지는 더보기 메뉴로 이동
             entry.remove()
             depthbox.appendChild(entry)
         }
@@ -75,7 +76,7 @@ export function hideUnwantedMenuItems(): void {
  * @param name 제거할 메뉴 이름
  */
 function removeEntryByName(elements: Element[], name: string): void {
-    const element = elements.find(c => c.children.item(0)?.textContent === name);
+    const element = elements.find(c => c.children.item(0)?.textContent === name)
 
     if (!element) {
         console.warn(`${name} 상단 메뉴 항목을 찾을 수 없습니다!`)

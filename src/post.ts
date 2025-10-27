@@ -1,5 +1,5 @@
 // 게시글 상세 페이지 기능
-import {Setting} from "./Setting";
+import { Setting } from './Setting'
 
 /**
  * 게시글 상세 페이지에서 작성자 ID를 표시하고 원하지 않는 콘텐츠를 숨기는 함수
@@ -25,7 +25,7 @@ function getPostAuthorId(): void {
 
     if (!ginfo2) {
         console.warn('ginfo2 not found')
-        
+
         return
     }
 

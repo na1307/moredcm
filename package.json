@@ -5,7 +5,7 @@
   "description": "dcinside mobile web enhancer",
   "author": "Bluehill",
   "license": "MIT",
-  "homepage": "https://github.com/na1307/blazor-github-pages",
+  "homepage": "https://github.com/na1307/moredcm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/na1307/moredcm.git"
@@ -22,11 +22,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@sonar/scan": "^4.3.2",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
     "vite": "^7.1.12",
     "vite-plugin-monkey": "^7.1.4"
   },

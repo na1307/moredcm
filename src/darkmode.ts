@@ -1,6 +1,6 @@
 // 다크 모드 자동 설정 기능
-import {Setting} from "./Setting";
-import {GM_cookie} from "$";
+import { Setting } from './Setting'
+import { GM_cookie } from '$'
 
 /**
  * 사용자의 시스템 다크 모드 설정에 따라 디시인사이드 다크 모드를 자동으로 설정하는 함수
@@ -10,7 +10,7 @@ export function setDarkModeDefault(): void {
     const ids = Setting.settings.isDarkSet
 
     // 다크 모드를 설정한 적이 없고, 시스템이 다크 모드인 경우
-    if (!ids.value && matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (!ids.value && matchMedia('(prefers-color-scheme: dark)').matches) {
         // 디시인사이드 다크 모드 쿠키 설정
         GM_cookie.set({
             name: 'm_dcinside_darkmode',

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -20,10 +23,12 @@ jobs:
         with:
           node-version-file: '.node-version'
           cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm lint
       - name: Build
-        run: |
-          pnpm install
-          pnpm build
+        run: pnpm build
       - name: SonarCloud
         run: pnpm sonar
         env:

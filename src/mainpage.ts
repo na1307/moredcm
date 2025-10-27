@@ -1,5 +1,5 @@
 // 메인 페이지 콘텐츠 숨기기 기능
-import { Setting } from "./Setting"
+import { Setting } from './Setting'
 
 /**
  * 메인 페이지에서 원하지 않는 콘텐츠를 숨기는 함수

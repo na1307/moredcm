@@ -1,5 +1,5 @@
 // MoreDCM 설정 관리 클래스
-import {GM_deleteValue, GM_getValue, GM_setValue} from "$";
+import { GM_deleteValue, GM_getValue, GM_setValue } from '$'
 
 /**
  * MoreDCM의 설정을 관리하는 클래스
@@ -18,7 +18,7 @@ export class Setting {
             hidePr: new Setting('hidePr', '인물갤 숨기기'),
             hideBj: new Setting('hideBj', 'BJ방송 숨기기'),
             hideGame: new Setting('hideGame', '게임 숨기기'),
-            hideEvent: new Setting('hideEvent', '이벤트 숨기기'),
+            hideEvent: new Setting('hideEvent', '이벤트 숨기기')
         },
         // 메인 페이지 설정
         mainPage: {

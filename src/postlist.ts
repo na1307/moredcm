@@ -1,9 +1,9 @@
 // 게시글 목록 페이지 기능
-import {getPostList} from "@gurumnyang/dcinside.js";
-import {Setting} from "./Setting";
+import { getPostList } from '@gurumnyang/dcinside.js'
+import { Setting } from './Setting'
 
 // 기존 list_more 함수를 저장할 변수
-let oldLM: any
+let oldLM: () => void
 // 현재 페이지 번호
 let currentPage: number
 
@@ -13,16 +13,19 @@ let currentPage: number
  */
 export function getPostAuthorIdOrIp(): void {
     // 게시판 또는 미니갤러리이고, 검색 결과가 아니며, "더보기" 버튼이 있는 경우
-    if ((location.pathname.startsWith('/board/') || location.pathname.startsWith('/mini/'))
-        && !location.href.includes('serval=') && document.getElementById('listMore')) {
+    if (
+        (location.pathname.startsWith('/board/') || location.pathname.startsWith('/mini/')) &&
+        !location.href.includes('serval=') &&
+        document.getElementById('listMore')
+    ) {
         // 기존 list_more 함수 백업
-        // @ts-ignore
+        // @ts-expect-error backup
         oldLM = list_more
 
         // list_more 함수를 새로운 함수로 교체 (더보기 버튼 클릭 시 실행됨)
-        // @ts-ignore
+        // @ts-expect-error replace
         list_more = async function (): void {
-            oldLM(); // 기존 함수 실행
+            oldLM() // 기존 함수 실행
             await sleep(0.25) // 로딩 대기
             currentPage++ // 페이지 증가
             getPostAuthorId() // 새로 로드된 게시글에 ID 표시
@@ -51,7 +54,8 @@ function getPostAuthorId(): void {
     // 모든 게시글 목록 요소를 가져와서 처리
     Array.from(document.getElementsByClassName('gall-detail-lst')).forEach(async lst => {
         // 고정닉 게시글 정보를 추출 (광고 제외)
-        const gonickPosts = Array.from(lst.children).filter(e => !e.classList.contains('adv-inner'))
+        const gonickPosts = Array.from(lst.children)
+            .filter(e => !e.classList.contains('adv-inner'))
             .map(e => {
                 // 게시글 링크 테이블 찾기
                 const lnktb = Array.from(e.children).find(ce => ce.classList.contains('gall-detail-lnktb'))
@@ -81,10 +85,12 @@ function getPostAuthorId(): void {
                 }
 
                 // 닉네임 요소 찾기 (고정닉만 해당)
-                const spnick = Array.from(ginfo.children).flatMap(ce => Array.from(ce.children)).find(ce => ce.classList.contains('sp-nick') || ce.classList.contains('icon_event'))
+                const spnick = Array.from(ginfo.children)
+                    .flatMap(ce => Array.from(ce.children))
+                    .find(ce => ce.classList.contains('sp-nick') || ce.classList.contains('icon_event'))
 
                 // 게시글 ID와 닉네임 요소를 반환 (고정닉인 경우만)
-                return spnick ? {postId: (lt as HTMLAnchorElement).href.split('/')[5], spnick: spnick} : null
+                return spnick ? { postId: (lt as HTMLAnchorElement).href.split('/')[5], spnick: spnick } : null
             })
             .filter(e => e !== null)
 
@@ -131,5 +137,5 @@ function getPostAuthorId(): void {
  * @param sec 대기할 시간(초)
  */
 function sleep(sec: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, sec * 1000));
+    return new Promise(resolve => setTimeout(resolve, sec * 1000))
 }

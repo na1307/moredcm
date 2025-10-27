@@ -1,13 +1,13 @@
 // MoreDCM 메인 진입점
 // 모든 기능을 초기화하고 실행하는 파일
 
-import {setDarkModeDefault} from "./darkmode";
-import {hideUnwantedMenuItems} from "./topmenu";
-import {hideUnwantedContents} from "./mainpage"
-import {addMoreDCMSetting} from "./aside"
-import {getPostAuthorIdOrIp} from "./postlist";
-import {getPostAuthorIdOrIpInPost} from "./post";
-import {hideDaum} from "./daum";
+import { setDarkModeDefault } from './darkmode'
+import { hideUnwantedMenuItems } from './topmenu'
+import { hideUnwantedContents } from './mainpage'
+import { addMoreDCMSetting } from './aside'
+import { getPostAuthorIdOrIp } from './postlist'
+import { getPostAuthorIdOrIpInPost } from './post'
+import { hideDaum } from './daum'
 
 // 다크 모드 자동 설정
 setDarkModeDefault()

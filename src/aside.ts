@@ -1,5 +1,5 @@
 // MoreDCM 설정 페이지 관련 기능
-import {Setting} from "./Setting"
+import { Setting } from './Setting'
 
 // MoreDCM 설정 창 요소
 let mdcmSettingWindow: HTMLDivElement
@@ -23,7 +23,7 @@ function addSettingEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
     if (!lst) {
-        console.warn("설정 리스트를 찾을 수 없습니다.")
+        console.warn('설정 리스트를 찾을 수 없습니다.')
 
         return
     }
@@ -62,7 +62,7 @@ function addResetEntry(): void {
     const lst = document.getElementsByClassName('all-setting-lst').item(0)
 
     if (!lst) {
-        console.warn("설정 리스트를 찾을 수 없습니다.")
+        console.warn('설정 리스트를 찾을 수 없습니다.')
 
         return
     }
