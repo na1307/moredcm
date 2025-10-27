@@ -16,7 +16,6 @@ export class Setting {
         // 상단 메뉴 설정
         topMenu: {
             hidePr: new Setting('hidePr', '인물갤 숨기기'),
-            hideBj: new Setting('hideBj', 'BJ방송 숨기기'),
             hideGame: new Setting('hideGame', '게임 숨기기'),
             hideEvent: new Setting('hideEvent', '이벤트 숨기기')
         },

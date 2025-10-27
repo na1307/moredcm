@@ -1,6 +1,7 @@
 // 게시글 목록 페이지 기능
 import { getPostList } from '@gurumnyang/dcinside.js'
 import { Setting } from './Setting'
+import { sleep } from './utils.ts'
 
 // 기존 list_more 함수를 저장할 변수
 let oldLM: () => void
@@ -130,12 +131,4 @@ async function getPostAuthorId(): Promise<void> {
             })
         })
     }
-}
-
-/**
- * 지정된 시간(초) 동안 대기하는 함수
- * @param sec 대기할 시간(초)
- */
-function sleep(sec: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, sec * 1000))
 }

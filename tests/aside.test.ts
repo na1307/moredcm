@@ -7,7 +7,7 @@ vi.mock('../src/Setting', () => ({
     Setting: {
         settings: {
             isDarkSet: { value: false, save: vi.fn(), reset: vi.fn() },
-            topMenu: { hideBj: { id: 'hideBj', title: 'BJ방송 숨기기', value: true, save: vi.fn(), reset: vi.fn() } },
+            topMenu: { hidePr: { id: 'hidePr', title: '인물갤 숨기기', value: true, save: vi.fn(), reset: vi.fn() } },
             mainPage: {},
             postList: {},
             post: {},
@@ -142,9 +142,9 @@ describe('aside.ts', () => {
         it('toggle clicked when enabled', ()=>{
             addMoreDCMSetting()
 
-            document.getElementById('mdcm-hidebj')!.click()
+            document.getElementById('mdcm-hidepr')!.click()
 
-            assert(!Setting.settings.topMenu.hideBj.value)
+            assert(!Setting.settings.topMenu.hidePr.value)
         })
 
         it('toggle clicked when disabled', () => {

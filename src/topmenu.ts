@@ -31,10 +31,6 @@ export function hideUnwantedMenuItems(): void {
         removeEntryByName(entries, '인물갤')
     }
 
-    if (Setting.settings.topMenu.hideBj.value) {
-        removeEntryByName(entries, 'BJ방송')
-    }
-
     if (Setting.settings.topMenu.hideGame.value) {
         removeEntryByName(entries, '게임')
     }

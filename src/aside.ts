@@ -208,7 +208,7 @@ function createMdcmsetLst(): HTMLUListElement {
 
     const postSetting = document.createElement('span')
     postSetting.className = 'ntc'
-    postSetting.textContent = '게시글 목록 설정'
+    postSetting.textContent = '게시글 설정'
 
     a4.appendChild(postSetting)
 

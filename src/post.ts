@@ -1,5 +1,8 @@
 // 게시글 상세 페이지 기능
 import { Setting } from './Setting'
+import { sleep } from './utils.ts'
+
+let oldCL: (e: unknown, t: unknown) => void
 
 /**
  * 게시글 상세 페이지에서 작성자 ID를 표시하고 원하지 않는 콘텐츠를 숨기는 함수
@@ -7,6 +10,19 @@ import { Setting } from './Setting'
 export function postFunction(): void {
     // 게시글 상세 페이지인지 확인 (경로가 4개 부분으로 나뉨)
     if (location.pathname.split('/').length === 4) {
+        // 기존 comment_list 함수 백업
+        // @ts-expect-error backup
+        oldCL = comment_list
+
+        // comment_list 함수를 새로운 함수로 교체 (새로 고침 버튼 클릭 시 실행됨)
+        // @ts-expect-error replace
+        comment_list = function(e: unknown, t: unknown):void {
+            oldCL(e,t)
+            sleep(0.15).then(() => {
+                getCommentsAuthorId() // 새로 로드된 댓글에 ID 표시
+            })
+        }
+
         getPostAuthorId()
         getCommentsAuthorId()
         hideUnwantedItems()

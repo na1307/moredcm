@@ -15,6 +15,9 @@ vi.mock('../src/Setting', () => ({
     }
 }))
 
+// 전역 comment_list 함수 모의를 위한 변수
+let mockOriginalCommentList: ReturnType<typeof vi.fn>
+
 // Mock location.pathname
 Object.defineProperty(window, 'location', {
     writable: true,
@@ -56,6 +59,10 @@ describe('post.ts', () => {
         Setting.settings.post.showPostAuthorId.value = false
         Setting.settings.post.showCommentAuthorId.value = false
         Setting.settings.post.hideBottomContents.value = false
+
+        // original comment_list 모의 초기화
+        mockOriginalCommentList = vi.fn()
+        global.comment_list = mockOriginalCommentList
     })
 
     describe('getPostAuthorId', () => {
@@ -224,6 +231,19 @@ describe('post.ts', () => {
             postFunction()
             const commenter1 = document.querySelectorAll('a.nick')[0]
             expect(commenter1.textContent).not.toContain('(di01)')
+        })
+
+        it('should add comment author IDs when refresh clicked', () => {
+            Setting.settings.post.showCommentAuthorId.value = true
+            postFunction()
+            const commenter1 = document.querySelectorAll('a.nick')[0]
+            const commenter2 = document.querySelectorAll('a.nick')[1]
+            expect(commenter1.textContent).toContain('(di01)')
+            expect(commenter2.textContent).not.toContain('(di01)')
+            // @ts-expect-error comment_list는 전역으로 모의됨
+            global.comment_list()
+            // originalCommentList가 호출되었는지 확인
+            expect(mockOriginalCommentList).toHaveBeenCalledOnce()
         })
     })
 
