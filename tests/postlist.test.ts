@@ -120,7 +120,7 @@ describe('postListFunction', () => {
         })
     })
 
-    test('lt 없음',async()=>{
+    test('lt 없음', async () => {
         document.body.innerHTML = `
             <ul class="gall-detail-lst">
                 <li>
@@ -157,7 +157,7 @@ describe('postListFunction', () => {
         })
     })
 
-    test('ginfo 없음',async()=>{
+    test('ginfo 없음', async () => {
         document.body.innerHTML = `
             <ul class="gall-detail-lst">
                 <li>

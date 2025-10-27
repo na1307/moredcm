@@ -16,8 +16,8 @@ export function postFunction(): void {
 
         // comment_list 함수를 새로운 함수로 교체 (새로 고침 버튼 클릭 시 실행됨)
         // @ts-expect-error replace
-        comment_list = function(e: unknown, t: unknown):void {
-            oldCL(e,t)
+        comment_list = function (e: unknown, t: unknown): void {
+            oldCL(e, t)
             sleep(0.15).then(() => {
                 getCommentsAuthorId() // 새로 로드된 댓글에 ID 표시
             })

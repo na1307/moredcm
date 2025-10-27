@@ -66,7 +66,7 @@ describe('post.ts', () => {
     })
 
     describe('getPostAuthorId', () => {
-        it('ginfo2 not found',()=>{
+        it('ginfo2 not found', () => {
             document.body.innerHTML = `
       <section>
         <div class="view-btm-con"></div>

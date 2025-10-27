@@ -139,7 +139,7 @@ describe('aside.ts', () => {
             expect(location.reload).not.toHaveBeenCalled()
         })
 
-        it('toggle clicked when enabled', ()=>{
+        it('toggle clicked when enabled', () => {
             addMoreDCMSetting()
 
             document.getElementById('mdcm-hidepr')!.click()
