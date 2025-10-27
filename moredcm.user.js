@@ -1,11 +1,15 @@
 // ==UserScript==
 // @name         MoreDCM
 // @namespace    npm/vite-plugin-monkey
-// @version      1.0-alpha.3
+// @version      1.0.0-alpha.4
 // @author       Bluehill
 // @description  dcinside mobile web enhancer
 // @license      MIT
 // @icon         https://vitejs.dev/logo.svg
+// @homepage     https://github.com/na1307/moredcm
+// @homepageURL  https://github.com/na1307/moredcm
+// @source       https://github.com/na1307/moredcm.git
+// @supportURL   https://github.com/na1307/moredcm/issues
 // @match        https://m.dcinside.com/*
 // @grant        GM_cookie
 // @grant        GM_deleteValue
@@ -25,7 +29,6 @@ static settings = {
 isDarkSet: new Setting("isDarkSet", "Placeholder", false),
 topMenu: {
         hidePr: new Setting("hidePr", "인물갤 숨기기"),
-        hideBj: new Setting("hideBj", "BJ방송 숨기기"),
         hideGame: new Setting("hideGame", "게임 숨기기"),
         hideEvent: new Setting("hideEvent", "이벤트 숨기기")
       },
@@ -99,9 +102,6 @@ reset() {
     if (Setting.settings.topMenu.hidePr.value) {
       removeEntryByName(entries, "인물갤");
     }
-    if (Setting.settings.topMenu.hideBj.value) {
-      removeEntryByName(entries, "BJ방송");
-    }
     if (Setting.settings.topMenu.hideGame.value) {
       removeEntryByName(entries, "게임");
     }
@@ -115,9 +115,6 @@ reset() {
           entry.remove();
           topmenuUl.appendChild(entry);
         }
-      } else if (entry.parentElement === topmenuUl) {
-        entry.remove();
-        depthbox.appendChild(entry);
       }
     });
     if (entries.length <= 6) {
@@ -224,6 +221,10 @@ reset() {
     lst.appendChild(li);
   }
   function addSettingWindow() {
+    if (!document.getElementsByClassName("all-setting-lst").item(0)) {
+      console.warn("설정 리스트를 찾을 수 없습니다.");
+      return;
+    }
     mdcmSettingWindow = document.createElement("div");
     mdcmSettingWindow.id = "mdcm-setting";
     mdcmSettingWindow.classList.add("layer-center-popup", "full");
@@ -288,7 +289,7 @@ reset() {
     a4.className = "noticeset-lnk";
     const postSetting = document.createElement("span");
     postSetting.className = "ntc";
-    postSetting.textContent = "게시글 목록 설정";
+    postSetting.textContent = "게시글 설정";
     a4.appendChild(postSetting);
     li4.appendChild(a4);
     mdcmsetLst.appendChild(li1);
@@ -19595,10 +19596,192 @@ return dist$1;
       };
     })();
     Object.defineProperty(mobileComment, "__esModule", { value: true });
+    mobileComment.createMobileComment = createMobileComment;
     mobileComment.deleteMobileComment = deleteMobileComment;
+    const node_url_1 = require$$4;
     const cheerio = __importStar(require$$3);
     const tough_cookie_1 = requireDist$1();
+    const util_1 = requireUtil();
     const mobileCommon_1 = requireMobileCommon();
+    const COMMENT_WRITE_ENDPOINT = `${mobileCommon_1.WRITE_BASE_URL}/ajax/comment-write`;
+    const COMMENT_ACCESS_TOKEN = "com_submit";
+    const COMMENT_DELETE_ACCESS_TOKEN = "com_submitDel";
+    function toAbsoluteUrl(url) {
+      if (!url)
+        return void 0;
+      try {
+        return new node_url_1.URL(url, mobileCommon_1.WRITE_BASE_URL).toString();
+      } catch (_) {
+        return url;
+      }
+    }
+    function normalizeContent(value) {
+      return (value || "").replace(/\s+/g, " ").trim();
+    }
+    function truncateSubject(subject) {
+      const normalized = normalizeContent(subject);
+      return normalized.length > 40 ? normalized.slice(0, 40) : normalized;
+    }
+    function setCookieAsync(jar, cookie, url) {
+      return new Promise((resolve, reject) => {
+        jar.setCookie(cookie, url, (err) => {
+          if (err)
+            reject(err);
+          else
+            resolve();
+        });
+      });
+    }
+    async function createMobileComment(options) {
+      const { galleryId, postId, content, jar: providedJar, nickname, password, userAgent, captchaCode, captchaKey, useGallNickname } = options || {};
+      if (!galleryId)
+        throw new Error("galleryId는 필수입니다.");
+      if (postId === void 0 || postId === null)
+        throw new Error("postId는 필수입니다.");
+      const memo = (content ?? "").trim();
+      if (!memo)
+        throw new Error("content는 비어 있을 수 없습니다.");
+      const jar = providedJar || new tough_cookie_1.CookieJar();
+      const client = (0, mobileCommon_1.createMobileClient)(jar, userAgent);
+      const postUrl = `${mobileCommon_1.WRITE_BASE_URL}/board/${encodeURIComponent(galleryId)}/${encodeURIComponent(String(postId))}`;
+      const boardReferer = `${mobileCommon_1.WRITE_BASE_URL}/board/${encodeURIComponent(galleryId)}`;
+      const viewRes = await (0, mobileCommon_1.getWithRedirect)(client, postUrl, {
+        headers: {
+          ...mobileCommon_1.HTML_HEADERS,
+          Referer: boardReferer
+        },
+        responseType: "text"
+      });
+      const html2 = viewRes.data;
+      const $2 = cheerio.load(html2);
+      const csrfToken = $2('meta[name="csrf-token"]').attr("content") || "";
+      if (!csrfToken)
+        throw new Error("CSRF 토큰을 찾을 수 없습니다.");
+      const userId = $2("#user_id").attr("value") || "";
+      const isLoggedIn = Boolean(userId);
+      const boardId = $2("#board_id").attr("value") || "";
+      const repleId = $2("#reple_id").attr("value") || "";
+      const bestChk = $2("#best_chk").attr("value") || "";
+      const commentNoField = $2("#comment_no").attr("value") || "";
+      const cpage = $2("#cpage").attr("value") || "1";
+      const gallNickname = $2("#gall_nickname").attr("value");
+      const defaultUseGallNickname = $2("#use_gall_nickname").attr("value");
+      const hideRobotName = $2(".comment-write .hide-robot").attr("name") || "";
+      const pageCaptchaKey = $2("#rand_codeC").attr("value") || "";
+      const captchaImageSrc = $2('.comment-write img[src*="/captcha/"]').attr("src") || "";
+      const subjectRaw = $2(".gallview-tit-box .tit").first().text() || "";
+      const subject = truncateSubject(subjectRaw);
+      const formNickname = $2("#comment_nick").attr("value") || "";
+      const formPassword = $2("#comment_pw").attr("value") || "";
+      const normalizedUseGallNickname = typeof useGallNickname !== "undefined" ? useGallNickname ? "1" : "0" : typeof defaultUseGallNickname === "string" ? defaultUseGallNickname : "";
+      if (!isLoggedIn) {
+        const guestNickname = (nickname ?? formNickname).trim();
+        if (!guestNickname)
+          throw new Error("nickname은 게스트 댓글 작성 시 필수입니다.");
+        const guestPassword = password ?? formPassword;
+        if (!guestPassword)
+          throw new Error("password는 게스트 댓글 작성 시 필수입니다.");
+        if (guestPassword.length < 2)
+          throw new Error("password는 2자 이상이어야 합니다.");
+        if (/^\s/.test(guestPassword) || /\s$/.test(guestPassword)) {
+          throw new Error("password의 처음과 끝에는 공백을 사용할 수 없습니다.");
+        }
+      }
+      const resolvedCaptchaKey = captchaKey || pageCaptchaKey;
+      if (resolvedCaptchaKey && !captchaCode) {
+        const captchaUrl = toAbsoluteUrl(captchaImageSrc || `/captcha/code?id=${galleryId}&dccode=${resolvedCaptchaKey}&type=C`);
+        throw new util_1.CrawlError("댓글 작성에는 캡차 코드가 필요합니다.", "auth", null, {
+          captchaKey: resolvedCaptchaKey,
+          captchaUrl
+        });
+      }
+      const accessHeaders = {
+        ...mobileCommon_1.AJAX_HEADERS,
+        "x-csrf-token": csrfToken,
+        Referer: postUrl
+      };
+      const accessPayload = new URLSearchParams({ token_verify: COMMENT_ACCESS_TOKEN }).toString();
+      const accessRes = await client.post(`${mobileCommon_1.WRITE_BASE_URL}/ajax/access`, accessPayload, {
+        headers: accessHeaders,
+        validateStatus: (status) => status >= 200 && status < 400
+      });
+      const conKey = (0, mobileCommon_1.findBlockOrConKey)(accessRes.data);
+      if (!conKey)
+        throw new Error("댓글 작성용 키(con_key)를 얻지 못했습니다.");
+      try {
+        await setCookieAsync(jar, `cmtw_chk=${conKey}; Max-Age=180; Path=/`, mobileCommon_1.WRITE_BASE_URL);
+      } catch (err) {
+      }
+      const params = new URLSearchParams();
+      params.set("comment_memo", memo);
+      params.set("mode", "com_write");
+      params.set("comment_no", commentNoField);
+      const nicknameToSend = (nickname ?? formNickname).trim();
+      params.set("comment_nick", nicknameToSend);
+      const passwordToSend = password ?? formPassword ?? "";
+      params.set("comment_pw", passwordToSend);
+      params.set("id", galleryId);
+      params.set("no", String(postId));
+      params.set("best_chk", bestChk);
+      params.set("board_id", boardId);
+      params.set("reple_id", repleId);
+      params.set("cpage", cpage);
+      if (subject)
+        params.set("subject", subject);
+      params.set("con_key", conKey);
+      const robotField = hideRobotName || "bbcdd3";
+      params.set(robotField, "1");
+      if (normalizedUseGallNickname) {
+        params.set("use_gall_nickname", normalizedUseGallNickname);
+      }
+      if (gallNickname && !nickname && normalizedUseGallNickname === "1") {
+        params.set("gall_nickname", gallNickname);
+      }
+      if (resolvedCaptchaKey && captchaCode) {
+        params.set("captcha_code", captchaCode);
+        params.set("rand_code", resolvedCaptchaKey);
+      }
+      const commentRes = await client.post(COMMENT_WRITE_ENDPOINT, params.toString(), {
+        headers: accessHeaders,
+        responseType: "json",
+        validateStatus: (status) => status >= 200 && status < 400
+      });
+      const responseData = commentRes.data;
+      let parsed = responseData;
+      if (typeof responseData === "string") {
+        try {
+          parsed = JSON.parse(responseData);
+        } catch (_) {
+          parsed = { result: 0, cause: "unexpected_response", raw: responseData };
+        }
+      }
+      const resultValue = parsed?.result;
+      const success = resultValue === 1 || resultValue === true || resultValue === "1";
+      const message = typeof parsed?.cause === "string" ? parsed.cause : void 0;
+      const commentId = parsed?.comment_no || parsed?.comment_id || parsed?.commentId || parsed?.data;
+      const nextCaptchaKey = typeof parsed?.ran_code === "string" ? parsed.ran_code : void 0;
+      const nextCaptchaUrl = nextCaptchaKey ? toAbsoluteUrl(`/captcha/code?id=${galleryId}&dccode=${nextCaptchaKey}&type=F`) : void 0;
+      if (!success) {
+        return {
+          success: false,
+          message: message || "댓글 등록에 실패했습니다.",
+          responseStatus: commentRes.status,
+          captchaKey: nextCaptchaKey,
+          captchaImageUrl: nextCaptchaUrl,
+          raw: typeof parsed === "object" ? parsed : void 0,
+          finalHtml: typeof responseData === "string" ? responseData : void 0
+        };
+      }
+      return {
+        success: true,
+        message,
+        commentId: commentId ? String(commentId) : void 0,
+        responseStatus: commentRes.status,
+        captchaKey: nextCaptchaKey,
+        captchaImageUrl: nextCaptchaUrl,
+        raw: typeof parsed === "object" ? parsed : void 0
+      };
+    }
     async function deleteMobileComment(options) {
       const { galleryId, postId, commentId, jar: providedJar, password, userAgent } = options;
       if (!galleryId)
@@ -19627,7 +19810,7 @@ return dist$1;
         "x-csrf-token": csrfToken,
         Referer: postUrl
       };
-      const conKeyPayload = new URLSearchParams({ token_verify: "com_submitDel" }).toString();
+      const conKeyPayload = new URLSearchParams({ token_verify: COMMENT_DELETE_ACCESS_TOKEN }).toString();
       const accessRes = await client.post(`${mobileCommon_1.WRITE_BASE_URL}/ajax/access`, conKeyPayload, {
         headers: accessHeaders,
         validateStatus: (status) => status >= 200 && status < 400
@@ -19676,7 +19859,7 @@ return dist$1;
     const { extractText, replaceImagesWithPlaceholder, processImages } = requireHtml();
     const { getMobilePostContent, parseMobilePostHtml } = requireMobilePost();
     const { createMobilePost, deleteMobilePost } = requireMobileWrite();
-    const { deleteMobileComment } = requireMobileComment();
+    const { createMobileComment, deleteMobileComment } = requireMobileComment();
     post = {
 getPostContent,
       getCommentsForPost,
@@ -19687,6 +19870,7 @@ getMobilePostContent,
       parseMobilePostHtml,
       createMobilePost,
       deleteMobilePost,
+      createMobileComment,
       deleteMobileComment
     };
     return post;
@@ -19712,6 +19896,7 @@ getMobilePostContent: post2.getMobilePostContent,
       parseMobilePostHtml: post2.parseMobilePostHtml,
       createMobilePost: post2.createMobilePost,
       deleteMobilePost: post2.deleteMobilePost,
+      createMobileComment: post2.createMobileComment,
       deleteMobileComment: post2.deleteMobileComment
     };
     return scraper;
@@ -20448,6 +20633,9 @@ getMobilePostContent: post2.getMobilePostContent,
     async function deletePost(options) {
       return scraper2.deleteMobilePost(options);
     }
+    async function createComment(options) {
+      return scraper2.createMobileComment(options);
+    }
     async function deleteComment(options) {
       return scraper2.deleteMobileComment(options);
     }
@@ -20461,6 +20649,7 @@ getMobilePostContent: post2.getMobilePostContent,
       search,
       mobileLogin: mobileLogin2,
       createPost,
+      createComment,
       deletePost,
       deleteComment,
       getPostNumbers: getPostList,
@@ -20471,29 +20660,33 @@ getMobilePostContent: post2.getMobilePostContent,
     return dist;
   }
   var distExports = requireDist();
+  function sleep(sec) {
+    return new Promise((resolve) => setTimeout(resolve, sec * 1e3));
+  }
   let oldLM;
   let currentPage;
-  function getPostAuthorIdOrIp() {
+  async function postListFunction() {
     if ((location.pathname.startsWith("/board/") || location.pathname.startsWith("/mini/")) && !location.href.includes("serval=") && document.getElementById("listMore")) {
       oldLM = list_more;
-      list_more = async function() {
+      list_more = function() {
         oldLM();
-        await sleep(0.25);
-        currentPage++;
-        getPostAuthorId$1();
+        sleep(0.15).then(() => {
+          currentPage++;
+          getPostAuthorId$1();
+        });
       };
       currentPage = Number.parseInt(location.href.split("page=")[1]);
       if (Number.isNaN(currentPage)) {
         currentPage = 1;
       }
-      getPostAuthorId$1();
+      await getPostAuthorId$1();
     }
   }
-  function getPostAuthorId$1() {
+  async function getPostAuthorId$1() {
     if (!Setting.settings.postList.showPostListAuthorId.value) {
       return;
     }
-    Array.from(document.getElementsByClassName("gall-detail-lst")).forEach(async (lst) => {
+    for (const lst of Array.from(document.getElementsByClassName("gall-detail-lst"))) {
       const gonickPosts = Array.from(lst.children).filter((e) => !e.classList.contains("adv-inner")).map((e) => {
         const lnktb = Array.from(e.children).find((ce) => ce.classList.contains("gall-detail-lnktb"));
         if (!lnktb) {
@@ -20536,13 +20729,18 @@ getMobilePostContent: post2.getMobilePostContent,
           parent2.appendChild(span);
         });
       });
-    });
+    }
   }
-  function sleep(sec) {
-    return new Promise((resolve) => setTimeout(resolve, sec * 1e3));
-  }
-  function getPostAuthorIdOrIpInPost() {
+  let oldCL;
+  function postFunction() {
     if (location.pathname.split("/").length === 4) {
+      oldCL = comment_list;
+      comment_list = function(e, t) {
+        oldCL(e, t);
+        sleep(0.15).then(() => {
+          getCommentsAuthorId();
+        });
+      };
       getPostAuthorId();
       getCommentsAuthorId();
       hideUnwantedItems();
@@ -20626,8 +20824,8 @@ getMobilePostContent: post2.getMobilePostContent,
   hideUnwantedMenuItems();
   hideUnwantedContents();
   addMoreDCMSetting();
-  getPostAuthorIdOrIp();
-  getPostAuthorIdOrIpInPost();
+  postListFunction();
+  postFunction();
   hideDaum();
 
 })();
