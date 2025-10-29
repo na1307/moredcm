@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@gurumnyang/dcinside.js':
-        specifier: ^1.9.0
-        version: 1.9.0(undici@7.16.0)
+        specifier: ^1.10.0
+        version: 1.10.0(undici@7.16.0)
     devDependencies:
       '@sonar/scan':
         specifier: ^4.3.2
@@ -303,8 +303,8 @@ packages:
     resolution: {integrity: sha512-sB5uyeq+dwCWyPi31B2gQlVlo+j5brPlWx4yZBrEaRo/nhdDE8Xke1gsGgtiBdaBTxuTkceLVuVt/pclrasb0A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gurumnyang/dcinside.js@1.9.0':
-    resolution: {integrity: sha512-mJbeAp9SU59opi0cnkWyPV1FlOrfCXyfpZIZaoFtUFJAXfhUgL/XCDieBzXnkuXaIeI/y8OeVYAG8EOW9G8kSg==}
+  '@gurumnyang/dcinside.js@1.10.0':
+    resolution: {integrity: sha512-FA7EpGecpr5UDyf3V72wWgbzppkr7dLk8BAbpqM7UQXkkKCNsyt1Jd3bm3HhIzycPcdF/WeS1X8UHYZSz0humw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -626,6 +626,9 @@ packages:
 
   axios@1.12.2:
     resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
+
+  axios@1.13.1:
+    resolution: {integrity: sha512-hU4EGxxt+j7TQijx1oYdAjw4xuIp1wRQSsbMFwSthCWeBQur1eF+qJ5iQ5sN3Tw8YRzQNKb8jszgBdMDVqwJcw==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -1429,11 +1432,11 @@ packages:
     resolution: {integrity: sha512-PSkbLUoxOFRzJYjjxHJt9xro7D+iilgMX/C9lawzVuYiIdcihh9DXmVibBe8lmcFrRi/VzlPjBxbN7rH24q8/Q==}
     engines: {node: '>=14.0.0'}
 
-  tldts-core@7.0.16:
-    resolution: {integrity: sha512-XHhPmHxphLi+LGbH0G/O7dmUH9V65OY20R7vH8gETHsp5AZCjBk9l8sqmRKLaGOxnETU7XNSDUPtewAy/K6jbA==}
+  tldts-core@7.0.17:
+    resolution: {integrity: sha512-DieYoGrP78PWKsrXr8MZwtQ7GLCUeLxihtjC1jZsW1DnvSMdKPitJSe8OSYDM2u5H6g3kWJZpePqkp43TfLh0g==}
 
-  tldts@7.0.16:
-    resolution: {integrity: sha512-5bdPHSwbKTeHmXrgecID4Ljff8rQjv7g8zKQPkCozRo2HWWni+p310FSn5ImI+9kWw9kK4lzOB5q/a6iv0IJsw==}
+  tldts@7.0.17:
+    resolution: {integrity: sha512-Y1KQBgDd/NUc+LfOtKS6mNsC9CCaH+m2P1RoIZy7RAPo3C3/t8X45+zgut31cRZtZ3xKPjfn3TkGTrctC2TQIQ==}
     hasBin: true
 
   to-regex-range@5.0.1:
@@ -1819,10 +1822,10 @@ snapshots:
       '@eslint/core': 0.16.0
       levn: 0.4.1
 
-  '@gurumnyang/dcinside.js@1.9.0(undici@7.16.0)':
+  '@gurumnyang/dcinside.js@1.10.0(undici@7.16.0)':
     dependencies:
-      axios: 1.12.2
-      axios-cookiejar-support: 6.0.4(axios@1.12.2)(tough-cookie@6.0.0)(undici@7.16.0)
+      axios: 1.13.1
+      axios-cookiejar-support: 6.0.4(axios@1.13.1)(tough-cookie@6.0.0)(undici@7.16.0)
       cheerio: 1.1.2
       cli-progress: 3.12.0
       form-data: 4.0.4
@@ -2148,15 +2151,23 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios-cookiejar-support@6.0.4(axios@1.12.2)(tough-cookie@6.0.0)(undici@7.16.0):
+  axios-cookiejar-support@6.0.4(axios@1.13.1)(tough-cookie@6.0.0)(undici@7.16.0):
     dependencies:
-      axios: 1.12.2
+      axios: 1.13.1
       http-cookie-agent: 7.0.2(tough-cookie@6.0.0)(undici@7.16.0)
       tough-cookie: 6.0.0
     transitivePeerDependencies:
       - undici
 
   axios@1.12.2:
+    dependencies:
+      follow-redirects: 1.15.11
+      form-data: 4.0.4
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.13.1:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.4
@@ -3026,11 +3037,11 @@ snapshots:
 
   tinyrainbow@3.0.3: {}
 
-  tldts-core@7.0.16: {}
+  tldts-core@7.0.17: {}
 
-  tldts@7.0.16:
+  tldts@7.0.17:
     dependencies:
-      tldts-core: 7.0.16
+      tldts-core: 7.0.17
 
   to-regex-range@5.0.1:
     dependencies:
@@ -3038,7 +3049,7 @@ snapshots:
 
   tough-cookie@6.0.0:
     dependencies:
-      tldts: 7.0.16
+      tldts: 7.0.17
 
   tr46@6.0.0:
     dependencies:
