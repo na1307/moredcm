@@ -18,7 +18,7 @@
     "tampermonkey"
   ],
   "type": "module",
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.20.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -41,6 +41,6 @@
     "vitest": "^4.0.4"
   },
   "dependencies": {
-    "@gurumnyang/dcinside.js": "^1.9.0"
+    "@gurumnyang/dcinside.js": "^1.10.0"
   }
 }

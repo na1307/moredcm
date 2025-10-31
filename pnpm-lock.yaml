@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@gurumnyang/dcinside.js':
-        specifier: ^1.9.0
-        version: 1.9.0(undici@7.16.0)
+        specifier: ^1.10.0
+        version: 1.10.0(undici@7.16.0)
     devDependencies:
       '@sonar/scan':
         specifier: ^4.3.2
@@ -303,8 +303,8 @@ packages:
     resolution: {integrity: sha512-sB5uyeq+dwCWyPi31B2gQlVlo+j5brPlWx4yZBrEaRo/nhdDE8Xke1gsGgtiBdaBTxuTkceLVuVt/pclrasb0A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gurumnyang/dcinside.js@1.9.0':
-    resolution: {integrity: sha512-mJbeAp9SU59opi0cnkWyPV1FlOrfCXyfpZIZaoFtUFJAXfhUgL/XCDieBzXnkuXaIeI/y8OeVYAG8EOW9G8kSg==}
+  '@gurumnyang/dcinside.js@1.10.0':
+    resolution: {integrity: sha512-FA7EpGecpr5UDyf3V72wWgbzppkr7dLk8BAbpqM7UQXkkKCNsyt1Jd3bm3HhIzycPcdF/WeS1X8UHYZSz0humw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1819,7 +1819,7 @@ snapshots:
       '@eslint/core': 0.16.0
       levn: 0.4.1
 
-  '@gurumnyang/dcinside.js@1.9.0(undici@7.16.0)':
+  '@gurumnyang/dcinside.js@1.10.0(undici@7.16.0)':
     dependencies:
       axios: 1.12.2
       axios-cookiejar-support: 6.0.4(axios@1.12.2)(tough-cookie@6.0.0)(undici@7.16.0)
