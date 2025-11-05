@@ -7,10 +7,6 @@ updates:
       day: wednesday
       time: "09:00"
       timezone: Asia/Seoul
-    assignees:
-      - na1307
-    pull-request-branch-name:
-      separator: _
     groups:
       npm-development:
         dependency-type: development
@@ -23,7 +19,3 @@ updates:
       interval: monthly
       time: "12:00"
       timezone: Asia/Seoul
-    assignees:
-      - na1307
-    pull-request-branch-name:
-      separator: _
