@@ -30,15 +30,15 @@
   },
   "devDependencies": {
     "@sonar/scan": "^4.3.2",
-    "@vitest/coverage-v8": "^4.0.4",
-    "eslint": "^9.38.0",
+    "@vitest/coverage-v8": "^4.0.7",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2",
+    "typescript-eslint": "^8.46.3",
     "vite": "^7.1.12",
     "vite-plugin-monkey": "^7.1.4",
-    "vitest": "^4.0.4"
+    "vitest": "^4.0.7"
   },
   "dependencies": {
     "@gurumnyang/dcinside.js": "^1.10.0"
