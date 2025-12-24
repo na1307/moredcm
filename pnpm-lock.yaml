@@ -9,15 +9,15 @@ importers:
   .:
     dependencies:
       '@gurumnyang/dcinside.js':
-        specifier: ^1.10.0
-        version: 1.10.0(undici@7.16.0)
+        specifier: ^1.11.0
+        version: 1.11.0(undici@7.16.0)
     devDependencies:
       '@sonar/scan':
         specifier: ^4.3.2
         version: 4.3.2
       '@vitest/coverage-v8':
         specifier: ^4.0.15
-        version: 4.0.15(vitest@4.0.15(jsdom@27.0.1(postcss@8.5.6)))
+        version: 4.0.15(vitest@4.0.15(jsdom@27.0.1))
       eslint:
         specifier: ^9.39.1
         version: 9.39.1
@@ -41,12 +41,12 @@ importers:
         version: 7.1.5(postcss@8.5.6)(vite@7.2.7)
       vitest:
         specifier: ^4.0.15
-        version: 4.0.15(jsdom@27.0.1(postcss@8.5.6))
+        version: 4.0.15(jsdom@27.0.1)
 
 packages:
 
-  '@asamuzakjp/css-color@4.1.0':
-    resolution: {integrity: sha512-9xiBAtLn4aNsa4mDnpovJvBn72tNEIACyvlqaNJ+ADemR+yeMJWnBudOi2qGDviJa7SwcDOU/TRh5dnET7qk0w==}
+  '@asamuzakjp/css-color@4.1.1':
+    resolution: {integrity: sha512-B0Hv6G3gWGMn0xKJ0txEi/jM5iFpT3MfDxmhZFb4W047GvytCf1DHQ1D69W3zHI4yWe2aTZAA0JnbMZ7Xc8DuQ==}
 
   '@asamuzakjp/dom-selector@6.7.6':
     resolution: {integrity: sha512-hBaJER6A9MpdG3WgdlOolHmbOYvSk46y7IQN/1+iqiCuUu6iWdQrs9DGKF8ocqsEqWujWf/V7b7vaDgiUmIvUg==}
@@ -99,11 +99,9 @@ packages:
     peerDependencies:
       '@csstools/css-tokenizer': ^3.0.4
 
-  '@csstools/css-syntax-patches-for-csstree@1.0.14':
-    resolution: {integrity: sha512-zSlIxa20WvMojjpCSy8WrNpcZ61RqfTfX3XTaOeVlGJrt/8HF3YbzgFZa01yTbT4GWQLwfTcC3EB8i3XnB647Q==}
+  '@csstools/css-syntax-patches-for-csstree@1.0.22':
+    resolution: {integrity: sha512-qBcx6zYlhleiFfdtzkRgwNC7VVoAwfK76Vmsw5t+PbvtdknO9StgRk7ROvq9so1iqbdW4uLIDAsXRsTfUrIoOw==}
     engines: {node: '>=18'}
-    peerDependencies:
-      postcss: ^8.4
 
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
@@ -303,8 +301,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gurumnyang/dcinside.js@1.10.0':
-    resolution: {integrity: sha512-FA7EpGecpr5UDyf3V72wWgbzppkr7dLk8BAbpqM7UQXkkKCNsyt1Jd3bm3HhIzycPcdF/WeS1X8UHYZSz0humw==}
+  '@gurumnyang/dcinside.js@1.11.0':
+    resolution: {integrity: sha512-W8AZ3Nbbw40uI4Uv0m6o5VhrUuWstjsm6az0BHAKqXo0I6o63o1S19jiaF4FQPXIK3s65N4KMDgO0sJpFLiW5Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -605,8 +603,8 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
-  axios-cookiejar-support@6.0.4:
-    resolution: {integrity: sha512-4Bzj+l63eGwnWDBFdJHeGS6Ij3ytpyqvo//ocsb5kCLN/rKthzk27Afh2iSkZtuudOBkHUWWIcyCb4GKhXqovQ==}
+  axios-cookiejar-support@6.0.5:
+    resolution: {integrity: sha512-ldPOQCJWB0ipugkTNVB8QRl/5L2UgfmVNVQtS9en1JQJ1wW588PqAmymnwmmgc12HLDzDtsJ28xE2ppj4rD4ng==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       axios: '>=0.20.0'
@@ -614,6 +612,9 @@ packages:
 
   axios@1.12.2:
     resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
+
+  axios@1.13.2:
+    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -710,8 +711,8 @@ packages:
     resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
     engines: {node: '>= 6'}
 
-  cssstyle@5.3.4:
-    resolution: {integrity: sha512-KyOS/kJMEq5O9GdPnaf82noigg5X5DYn0kZPJTaAsCUaBizp6Xa1y9D4Qoqf/JazEXWuruErHgVXwjN5391ZJw==}
+  cssstyle@5.3.5:
+    resolution: {integrity: sha512-GlsEptulso7Jg0VaOZ8BXQi3AkYM5BOJKEO/rjMidSCq70FkIC5y0eawrCXeYzxgt3OCf4Ls+eoxN+/05vN0Ag==}
     engines: {node: '>=20'}
 
   cuint@0.2.2:
@@ -914,8 +915,8 @@ packages:
       debug:
         optional: true
 
-  form-data@4.0.4:
-    resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
+  form-data@4.0.5:
+    resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
     engines: {node: '>= 6'}
 
   fs-extra@11.3.2:
@@ -983,11 +984,11 @@ packages:
   htmlparser2@10.0.0:
     resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
-  http-cookie-agent@7.0.2:
-    resolution: {integrity: sha512-aHaES6SOFtnSlmWu0yEaaQvu+QexUG2gscSAvMhJ7auzW8r/jYOgGrzuAm9G9nHbksuhz7Lw4zOwDHmfQaxZvw==}
+  http-cookie-agent@7.0.3:
+    resolution: {integrity: sha512-EeZo7CGhfqPW6R006rJa4QtZZUpBygDa2HZH3DJqsTzTjyRE6foDBVQIv/pjVsxHC8z2GIdbB1Hvn9SRorP3WQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      tough-cookie: ^4.0.0 || ^5.0.0
+      tough-cookie: ^4.0.0 || ^5.0.0 || ^6.0.0
       undici: ^7.0.0
     peerDependenciesMeta:
       undici:
@@ -1378,11 +1379,11 @@ packages:
     resolution: {integrity: sha512-PSkbLUoxOFRzJYjjxHJt9xro7D+iilgMX/C9lawzVuYiIdcihh9DXmVibBe8lmcFrRi/VzlPjBxbN7rH24q8/Q==}
     engines: {node: '>=14.0.0'}
 
-  tldts-core@7.0.16:
-    resolution: {integrity: sha512-XHhPmHxphLi+LGbH0G/O7dmUH9V65OY20R7vH8gETHsp5AZCjBk9l8sqmRKLaGOxnETU7XNSDUPtewAy/K6jbA==}
+  tldts-core@7.0.19:
+    resolution: {integrity: sha512-lJX2dEWx0SGH4O6p+7FPwYmJ/bu1JbcGJ8RLaG9b7liIgZ85itUVEPbMtWRVrde/0fnDPEPHW10ZsKW3kVsE9A==}
 
-  tldts@7.0.16:
-    resolution: {integrity: sha512-5bdPHSwbKTeHmXrgecID4Ljff8rQjv7g8zKQPkCozRo2HWWni+p310FSn5ImI+9kWw9kK4lzOB5q/a6iv0IJsw==}
+  tldts@7.0.19:
+    resolution: {integrity: sha512-8PWx8tvC4jDB39BQw1m4x8y5MH1BcQ5xHeL2n7UVFulMPH/3Q0uiamahFJ3lXA0zO2SUyRXuVVbWSDmstlt9YA==}
     hasBin: true
 
   tough-cookie@6.0.0:
@@ -1574,7 +1575,7 @@ packages:
 
 snapshots:
 
-  '@asamuzakjp/css-color@4.1.0':
+  '@asamuzakjp/css-color@4.1.1':
     dependencies:
       '@csstools/css-calc': 2.1.4(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-color-parser': 3.1.0(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
@@ -1632,9 +1633,7 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
     optional: true
 
-  '@csstools/css-syntax-patches-for-csstree@1.0.14(postcss@8.5.6)':
-    dependencies:
-      postcss: 8.5.6
+  '@csstools/css-syntax-patches-for-csstree@1.0.22':
     optional: true
 
   '@csstools/css-tokenizer@3.0.4':
@@ -1764,13 +1763,13 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@gurumnyang/dcinside.js@1.10.0(undici@7.16.0)':
+  '@gurumnyang/dcinside.js@1.11.0(undici@7.16.0)':
     dependencies:
-      axios: 1.12.2
-      axios-cookiejar-support: 6.0.4(axios@1.12.2)(tough-cookie@6.0.0)(undici@7.16.0)
+      axios: 1.13.2
+      axios-cookiejar-support: 6.0.5(axios@1.13.2)(tough-cookie@6.0.0)(undici@7.16.0)
       cheerio: 1.1.2
       cli-progress: 3.12.0
-      form-data: 4.0.4
+      form-data: 4.0.5
       tough-cookie: 6.0.0
     transitivePeerDependencies:
       - debug
@@ -1984,7 +1983,7 @@ snapshots:
       '@typescript-eslint/types': 8.49.0
       eslint-visitor-keys: 4.2.1
 
-  '@vitest/coverage-v8@4.0.15(vitest@4.0.15(jsdom@27.0.1(postcss@8.5.6)))':
+  '@vitest/coverage-v8@4.0.15(vitest@4.0.15(jsdom@27.0.1))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.15
@@ -1997,7 +1996,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.15(jsdom@27.0.1(postcss@8.5.6))
+      vitest: 4.0.15(jsdom@27.0.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -2079,10 +2078,10 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios-cookiejar-support@6.0.4(axios@1.12.2)(tough-cookie@6.0.0)(undici@7.16.0):
+  axios-cookiejar-support@6.0.5(axios@1.13.2)(tough-cookie@6.0.0)(undici@7.16.0):
     dependencies:
-      axios: 1.12.2
-      http-cookie-agent: 7.0.2(tough-cookie@6.0.0)(undici@7.16.0)
+      axios: 1.13.2
+      http-cookie-agent: 7.0.3(tough-cookie@6.0.0)(undici@7.16.0)
       tough-cookie: 6.0.0
     transitivePeerDependencies:
       - undici
@@ -2090,7 +2089,15 @@ snapshots:
   axios@1.12.2:
     dependencies:
       follow-redirects: 1.15.11
-      form-data: 4.0.4
+      form-data: 4.0.5
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.13.2:
+    dependencies:
+      follow-redirects: 1.15.11
+      form-data: 4.0.5
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -2198,13 +2205,11 @@ snapshots:
 
   css-what@6.2.2: {}
 
-  cssstyle@5.3.4(postcss@8.5.6):
+  cssstyle@5.3.5:
     dependencies:
-      '@asamuzakjp/css-color': 4.1.0
-      '@csstools/css-syntax-patches-for-csstree': 1.0.14(postcss@8.5.6)
+      '@asamuzakjp/css-color': 4.1.1
+      '@csstools/css-syntax-patches-for-csstree': 1.0.22
       css-tree: 3.1.0
-    transitivePeerDependencies:
-      - postcss
     optional: true
 
   cuint@0.2.2: {}
@@ -2430,7 +2435,7 @@ snapshots:
 
   follow-redirects@1.15.11: {}
 
-  form-data@4.0.4:
+  form-data@4.0.5:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -2505,7 +2510,7 @@ snapshots:
       domutils: 3.2.2
       entities: 6.0.1
 
-  http-cookie-agent@7.0.2(tough-cookie@6.0.0)(undici@7.16.0):
+  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.16.0):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 6.0.0
@@ -2595,10 +2600,10 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@27.0.1(postcss@8.5.6):
+  jsdom@27.0.1:
     dependencies:
       '@asamuzakjp/dom-selector': 6.7.6
-      cssstyle: 5.3.4(postcss@8.5.6)
+      cssstyle: 5.3.5
       data-urls: 6.0.0
       decimal.js: 10.6.0
       html-encoding-sniffer: 4.0.0
@@ -2619,7 +2624,6 @@ snapshots:
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
-      - postcss
       - supports-color
       - utf-8-validate
     optional: true
@@ -2916,15 +2920,15 @@ snapshots:
 
   tinyrainbow@3.0.3: {}
 
-  tldts-core@7.0.16: {}
+  tldts-core@7.0.19: {}
 
-  tldts@7.0.16:
+  tldts@7.0.19:
     dependencies:
-      tldts-core: 7.0.16
+      tldts-core: 7.0.19
 
   tough-cookie@6.0.0:
     dependencies:
-      tldts: 7.0.16
+      tldts: 7.0.19
 
   tr46@6.0.0:
     dependencies:
@@ -2989,7 +2993,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  vitest@4.0.15(jsdom@27.0.1(postcss@8.5.6)):
+  vitest@4.0.15(jsdom@27.0.1):
     dependencies:
       '@vitest/expect': 4.0.15
       '@vitest/mocker': 4.0.15(vite@7.2.7)
@@ -3012,7 +3016,7 @@ snapshots:
       vite: 7.2.7
       why-is-node-running: 2.3.0
     optionalDependencies:
-      jsdom: 27.0.1(postcss@8.5.6)
+      jsdom: 27.0.1
     transitivePeerDependencies:
       - jiti
       - less
