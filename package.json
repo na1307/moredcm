@@ -41,6 +41,6 @@
     "vitest": "^4.0.15"
   },
   "dependencies": {
-    "@gurumnyang/dcinside.js": "^1.10.0"
+    "@gurumnyang/dcinside.js": "^1.11.0"
   }
 }
