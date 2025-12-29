@@ -31,6 +31,10 @@ export function hideUnwantedMenuItems(): void {
         removeEntryByName(entries, '인물갤')
     }
 
+    if (Setting.settings.topMenu.hideShopping.value) {
+        removeEntryByName(entries, '도끼쇼핑')
+    }
+    
     if (Setting.settings.topMenu.hideGame.value) {
         removeEntryByName(entries, '게임')
     }
@@ -41,8 +45,8 @@ export function hideUnwantedMenuItems(): void {
 
     // 남은 메뉴 항목들을 재배치
     entries.forEach((entry, index) => {
-        if (index <= 5) {
-            // 처음 6개는 메인 메뉴에 표시
+        if (index <= 3) {
+            // 처음 4개는 메인 메뉴에 표시
             entry.classList.add('swiper-slide')
 
             if (entry.parentElement === depthbox) {
@@ -52,8 +56,8 @@ export function hideUnwantedMenuItems(): void {
         }
     })
 
-    // 메뉴가 6개 이하면 더보기 버튼 제거
-    if (entries.length <= 6) {
+    // 메뉴가 4개 이하면 더보기 버튼 제거
+    if (entries.length <= 4) {
         topmenu.classList.remove('swiper-container')
         topmenu.style.paddingRight = '12px'
         topmenu.style.marginRight = '0'

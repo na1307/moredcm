@@ -8,6 +8,7 @@ vi.mock('../src/Setting', () => ({
         settings: {
             topMenu: {
                 hidePr: { value: false },
+                hideShopping: { value: false },
                 hideGame: { value: false },
                 hideEvent: { value: false }
             }
@@ -100,12 +101,12 @@ describe('hideUnwantedMenuItems', () => {
         expect(menuTexts.length).toBe(9)
     })
 
-    test('메뉴가 6개 이하일 때 더보기 버튼을 제거해야 함', () => {
-        // 7개 항목을 숨겨 총 5개 항목만 남김
+    test('메뉴가 4개 이하일 때 더보기 버튼을 제거해야 함', () => {
+        // 5개 항목을 숨겨 총 4개 항목만 남김
         document.body.innerHTML = `
             <div id="topmenu">
                 <ul>
-                    ${['갤러리', '최신', '실시간', '인기', '개념', '인물갤'].map(name => `<li><a>${name}</a></li>`).join('')}
+                    ${['갤러리', '마이너갤', '미니갤', '인물갤', '게임'].map(name => `<li><a>${name}</a></li>`).join('')}
                 </ul>
             </div>
             <button id="topmenu_toggle_btn"></button>
@@ -120,10 +121,10 @@ describe('hideUnwantedMenuItems', () => {
         expect(document.getElementById('topmenu_toggle_btn')).toBeNull()
         expect(document.getElementById('topmenu_depthbox')).toBeNull()
         const topmenuUl = document.querySelector('#topmenu > ul')!
-        expect(topmenuUl.children.length).toBe(5)
+        expect(topmenuUl.children.length).toBe(4)
     })
 
-    test('메뉴가 6개를 초과하면 더보기 버튼을 유지해야 함', () => {
+    test('메뉴가 4개를 초과하면 더보기 버튼을 유지해야 함', () => {
         hideUnwantedMenuItems() // 기본 12개 항목
         expect(document.getElementById('topmenu_toggle_btn')).not.toBeNull()
         expect(document.getElementById('topmenu_depthbox')).not.toBeNull()

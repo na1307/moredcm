@@ -16,6 +16,7 @@ export class Setting {
         // 상단 메뉴 설정
         topMenu: {
             hidePr: new Setting('hidePr', '인물갤 숨기기'),
+            hideShopping: new Setting('hideShopping', '도끼쇼핑 숨기기'),
             hideGame: new Setting('hideGame', '게임 숨기기'),
             hideEvent: new Setting('hideEvent', '이벤트 숨기기')
         },
@@ -24,6 +25,7 @@ export class Setting {
             hideTrend: new Setting('hideTrendMain', '디시트렌드/신설갤 숨기기'),
             hideSilbe: new Setting('hideSilbe', '실베 숨기기'),
             hideNews: new Setting('hideNews', '뉴스 숨기기'),
+            hideRecommend: new Setting('hideRecommend', '개념글 숨기기'),
             hideMedia: new Setting('hideMedia', '미디어 숨기기')
         },
         // 게시글 목록 설정

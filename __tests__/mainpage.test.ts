@@ -10,6 +10,7 @@ vi.mock('../src/Setting', () => ({
                 hideTrend: { value: false },
                 hideSilbe: { value: false },
                 hideNews: { value: false },
+                hideRecommend: { value: false },
                 hideMedia: { value: false }
             }
         }

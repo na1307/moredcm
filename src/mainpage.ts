@@ -11,6 +11,7 @@ export function hideUnwantedContents(): void {
         noDctrend()
         jokkateunSilsiganBest()
         noDcnews()
+        noRecommended()
         noDcmedia()
     }
 }
@@ -39,6 +40,15 @@ function jokkateunSilsiganBest(): void {
 function noDcnews(): void {
     if (Setting.settings.mainPage.hideNews.value) {
         Array.from(document.getElementsByClassName('dna-group')).forEach(e => e.remove())
+    }
+}
+
+/**
+ * 개념글 영역을 숨기는 함수
+ */
+function noRecommended(): void {
+    if (Setting.settings.mainPage.hideRecommend.value) {
+        Array.from(document.getElementsByClassName('gall-group')).forEach(e => e.remove())
     }
 }
 
