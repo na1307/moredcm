@@ -25,7 +25,7 @@ export async function postListFunction(): Promise<void> {
 
         // list_more 함수를 새로운 함수로 교체 (더보기 버튼 클릭 시 실행됨)
         // @ts-expect-error replace
-        list_more = function (): void {
+        list_more = (): void => {
             oldLM() // 기존 함수 실행
             sleep(0.15).then(() => {
                 currentPage++ // 페이지 증가
@@ -34,7 +34,7 @@ export async function postListFunction(): Promise<void> {
         }
 
         // URL에서 현재 페이지 번호 추출
-        currentPage = Number.parseInt(location.href.split('page=')[1])
+        currentPage = Number.parseInt(location.href.split('page=')[1], 10)
 
         if (Number.isNaN(currentPage)) {
             currentPage = 1 // 페이지 번호가 없으면 1로 설정

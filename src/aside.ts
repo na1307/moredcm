@@ -256,7 +256,7 @@ function createSettingEntry(ts: Setting, depth: boolean): HTMLLIElement {
     bgm.className = 'bgm'
 
     const label = document.createElement('label')
-    label.id = 'mdcm-' + ts.id.toLowerCase()
+    label.id = `mdcm-${ts.id.toLowerCase()}`
     label.classList.add('bgm-control')
 
     if (ts.value) {
