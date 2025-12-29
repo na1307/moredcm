@@ -34,7 +34,7 @@ export function hideUnwantedMenuItems(): void {
     if (Setting.settings.topMenu.hideShopping.value) {
         removeEntryByName(entries, '도끼쇼핑')
     }
-    
+
     if (Setting.settings.topMenu.hideGame.value) {
         removeEntryByName(entries, '게임')
     }
