@@ -19,6 +19,12 @@ export async function postListFunction(): Promise<void> {
         !location.href.includes('serval=') &&
         document.getElementById('listMore')
     ) {
+        // 설문 숨기기
+        Array.from(document.getElementsByClassName('survey')).forEach(e => e.remove())
+
+        // 이슈 숨기기
+        Array.from(document.querySelectorAll('span')).find(e => e.innerText.trim() === '이슈')?.parentElement?.parentElement?.parentElement?.remove()
+
         // 기존 list_more 함수 백업
         // @ts-expect-error backup
         oldLM = list_more

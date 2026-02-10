@@ -1,7 +1,7 @@
 {
   "name": "moredcm",
   "private": true,
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "dcinside mobile web enhancer",
   "author": "Bluehill",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "tampermonkey"
   ],
   "type": "module",
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.29.2",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
